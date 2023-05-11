@@ -1,17 +1,7 @@
 package com.example.practicalwork.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public enum TypeOfContractor {
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class TypeOfContractor {
-
-    private String individual;
-    private String entity;
-
+      individual,
+      entity
 }

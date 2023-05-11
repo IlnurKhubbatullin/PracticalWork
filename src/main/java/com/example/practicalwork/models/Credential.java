@@ -17,25 +17,17 @@ import java.time.LocalDateTime;
 public class Credential {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "text")
     private String text;
 
-    @Column(name = "version")
     private String version;
 
-    @Column (name = "created_at")
     private LocalDateTime createdAt;
 
-    @OneToOne
     private TypeOfContractor typeOfContractor;
 
-    @Column (name = "removed")
     private boolean removed;
-
-
-
 
 }
