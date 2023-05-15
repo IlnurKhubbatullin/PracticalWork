@@ -21,9 +21,11 @@ public class Document implements Serializable {
     private String number;
     private DocTitle docTitle;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
     private Boolean removed;
+
+    @OneToMany
+    @JoinColumn (name = "document_id")
+    private List<DocRelated> docRelatedList;
 
     @OneToOne
     private DocTemplate template;
