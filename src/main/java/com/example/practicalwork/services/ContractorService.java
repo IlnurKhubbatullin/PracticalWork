@@ -1,7 +1,8 @@
 package com.example.practicalwork.services;
 
 import com.example.practicalwork.models.Contractor;
-import com.example.practicalwork.repository.ContractorRepository;
+import com.example.practicalwork.models.Document;
+import com.example.practicalwork.repositories.ContractorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -49,7 +50,7 @@ public class ContractorService {
     }
 
     public Contractor findContractorsByDocument(Document document) {
-        Contractor contractor = contractorRepository.findContractorByDocuments(document).orElse(null);
+        Contractor contractor = contractorRepository.findContractorByDocuments(document)
     }
 
 }

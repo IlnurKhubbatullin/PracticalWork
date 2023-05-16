@@ -1,4 +1,4 @@
-package com.example.practicalwork.repository;
+package com.example.practicalwork.repositories;
 
 import com.example.practicalwork.models.Contractor;
 import org.springframework.data.jpa.repository.JpaRepository;
