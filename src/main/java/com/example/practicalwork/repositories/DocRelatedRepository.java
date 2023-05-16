@@ -1,6 +1,6 @@
 package com.example.practicalwork.repositories;
 
-import com.svbabaya.edms.models.DocRelated;
+import com.example.practicalwork.models.DocRelated;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
