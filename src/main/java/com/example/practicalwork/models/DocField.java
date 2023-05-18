@@ -1,5 +1,6 @@
 package com.example.practicalwork.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +26,13 @@ public class DocField implements Serializable {
     private String type;
     private String placeholder;
     private String defaultValue;
+    @JsonIgnore
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @JsonIgnore
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    @JsonIgnore
     private Boolean removed;
 
 }
