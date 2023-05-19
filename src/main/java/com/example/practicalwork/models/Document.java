@@ -29,7 +29,7 @@ public class Document implements Serializable {
     private Boolean removed;
 
     @OneToMany
-    @JoinColumn (name = "document_id")
+//    @JoinColumn (name = "document_id")
     private List<DocRelated> docRelatedList;
 
     @OneToOne
@@ -39,7 +39,7 @@ public class Document implements Serializable {
     private DocFile file;
 
     @OneToMany
-    @JoinColumn (name = "document_id")
+//    @JoinColumn (name = "document_id")
     private List<DocField> completedFields;
 
     @ManyToMany (mappedBy = "documents")
