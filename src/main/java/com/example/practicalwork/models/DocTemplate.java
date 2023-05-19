@@ -28,7 +28,7 @@ public class DocTemplate implements Serializable {
     private Boolean removed;
 
     @OneToMany
-    @JoinColumn (name = "template_id")
+//    @JoinColumn (name = "template_id")
     private List<DocField> templateFields;
 
 }
