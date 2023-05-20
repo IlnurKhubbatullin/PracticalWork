@@ -4,21 +4,19 @@ import com.example.practicalwork.DTO.DocumentDTO;
 import com.example.practicalwork.models.Document;
 import com.example.practicalwork.repositories.DocRepository;
 import com.example.practicalwork.utils.DocNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true)
 public class DocumentService {
     private final DocRepository docRepository;
 //    private final DocumentDTO documentDTO;
-    public DocumentService(DocRepository docRepository) {
-        this.docRepository = docRepository;
-//        this.documentDTO = documentDTO;
-    }
+
     public List<Document> findAll() {
 
         return docRepository.findAll();
@@ -52,6 +50,7 @@ public class DocumentService {
         Document myDoc = read(dto.getId());
         myDoc.setNumber(dto.getNumber());
         myDoc.setDocTitle(dto.getDocTitle());
+
         docRepository.save(myDoc);
 
     }
