@@ -21,11 +21,12 @@ public class DocTemplate implements Serializable {
     private Long id;
     private String title;
     private String version;
+    private DocTitle docTitle;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    private Boolean removed;
+    private boolean removed;
 
     @OneToMany
 //    @JoinColumn (name = "template_id")

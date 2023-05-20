@@ -14,10 +14,10 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class DocumentService {
     private final DocRepository docRepository;
-    private final DocumentDTO documentDTO;
-    public DocumentService(DocRepository docRepository, DocumentDTO documentDTO) {
+//    private final DocumentDTO documentDTO;
+    public DocumentService(DocRepository docRepository) {
         this.docRepository = docRepository;
-        this.documentDTO = documentDTO;
+//        this.documentDTO = documentDTO;
     }
     public List<Document> findAll() {
 
@@ -29,11 +29,20 @@ public class DocumentService {
     }
     @Transactional
     public void create(Document document) {
+
         docRepository.save(document);
     }
     @Transactional
     public void delete(Long id) {
-        read(id).setRemoved(true);
+        Document doc = read(id);
+        doc.setRemoved(true);
+        docRepository.save(doc);
+    }
+    @Transactional
+    public void revive(Long id) {
+        Document doc = read(id);
+        doc.setRemoved(false);
+        docRepository.save(doc);
     }
     @Transactional
     public void update(DocumentDTO dto) {
