@@ -3,6 +3,7 @@ package com.example.practicalwork.DTO;
 import com.example.practicalwork.models.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Component
+@Schema (description = "Information about document")
 public class DocumentDTO {
     private Long id;
     private String number;

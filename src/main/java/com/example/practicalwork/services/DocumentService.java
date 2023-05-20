@@ -43,13 +43,13 @@ public class DocumentService {
         docRepository.save(doc);
     }
     @Transactional
-    public void update(DocumentDTO dto) {
+    public void update(Document entity) {
 
         // Change to ModelMapper
 
-        Document myDoc = read(dto.getId());
-        myDoc.setNumber(dto.getNumber());
-        myDoc.setDocTitle(dto.getDocTitle());
+        Document myDoc = read(entity.getId());
+        myDoc.setNumber(entity.getNumber());
+        myDoc.setDocTitle(entity.getDocTitle());
 
         docRepository.save(myDoc);
 

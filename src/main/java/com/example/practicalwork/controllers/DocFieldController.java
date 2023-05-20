@@ -15,10 +15,8 @@ import java.util.List;
 @RequestMapping("/api/field")
 @AllArgsConstructor
 public class DocFieldController {
-
     private final DocFieldService docFieldService;
     private final DocFieldConvertor docFieldConvertor;
-
     @GetMapping("/all")
     public List<DocFieldDTO> getAllFields() {
         List<DocFieldDTO> list = docFieldService.findAll()
