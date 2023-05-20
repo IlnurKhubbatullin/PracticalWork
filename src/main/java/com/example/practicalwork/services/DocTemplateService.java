@@ -23,6 +23,12 @@ public class DocTemplateService {
         return docTemplateRepository.findAll();
     }
 
+    public List<DocTemplate> findCurrent() {
+        return docTemplateRepository.findAll()
+                .stream().filter(el -> !el.isRemoved())
+                .toList();
+    }
+
     public DocTemplate read(Long id) {
         Optional<DocTemplate> foundDocument = docTemplateRepository.findById(id);
         return foundDocument.orElseThrow(DocTemplateNotFoundException::new);
@@ -49,16 +55,17 @@ public class DocTemplateService {
     }
 
     @Transactional
-    public void update(DocTemplateDTO dto) {
+    public void update(DocTemplate entity) {
 
         // Change to ModelMapper
 
-        DocTemplate myDocTemplate = read(dto.getId());
-        myDocTemplate.setTitle(dto.getTitle());
-        myDocTemplate.setVersion(dto.getVersion());
-        myDocTemplate.setDocTitle(dto.getDocTitle());
+        DocTemplate myDocTemplate = read(entity.getId());
+        myDocTemplate.setTitle(entity.getTitle());
+        myDocTemplate.setVersion(entity.getVersion());
+        myDocTemplate.setDocTitle(entity.getDocTitle());
 
         docTemplateRepository.save(myDocTemplate);
 
     }
+
 }

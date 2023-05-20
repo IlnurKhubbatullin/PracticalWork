@@ -49,15 +49,15 @@ public class DocFieldService {
     }
 
     @Transactional
-    public void update(DocFieldDTO dto) {
+    public void update(DocField entity) {
 
         // Change to ModelMapper
 
-        DocField myDocField = read(dto.getId());
-        myDocField.setName(dto.getName());
-        myDocField.setType(dto.getType());
-        myDocField.setPlaceholder(dto.getPlaceholder());
-        myDocField.setDefaultValue(dto.getDefaultValue());
+        DocField myDocField = read(entity.getId());
+        myDocField.setName(entity.getName());
+        myDocField.setType(entity.getType());
+        myDocField.setPlaceholder(entity.getPlaceholder());
+        myDocField.setDefaultValue(entity.getDefaultValue());
 
         docFieldRepository.save(myDocField);
 

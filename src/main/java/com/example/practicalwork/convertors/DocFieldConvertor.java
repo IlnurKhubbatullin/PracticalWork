@@ -11,8 +11,13 @@ import org.springframework.stereotype.Component;
 public class DocFieldConvertor {
     private ModelMapper modelMapper;
 
-    public DocFieldDTO convertToDto(DocField entity){
+    public DocFieldDTO convertToDto(DocField entity) {
 
         return modelMapper.map(entity, DocFieldDTO.class);
+    }
+
+    public DocField convertToEntity(DocFieldDTO dto) {
+
+        return modelMapper.map(dto, DocField.class);
     }
 }
