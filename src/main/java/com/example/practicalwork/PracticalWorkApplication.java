@@ -18,6 +18,5 @@ public class PracticalWorkApplication {
 
         return new ModelMapper();
     }
-    
 
 }
