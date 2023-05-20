@@ -5,7 +5,6 @@ import com.example.practicalwork.convertors.DocumentConvertor;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.DocListIsEmptyException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
