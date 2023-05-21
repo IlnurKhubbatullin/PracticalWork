@@ -1,6 +1,7 @@
 package com.example.practicalwork.convertors;
 
 import com.example.practicalwork.DTO.DocumentDTO;
+import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.Document;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,4 +21,13 @@ public class DocumentConvertor {
 
         return modelMapper.map(dto, Document.class);
     }
+
+    public Document convertTemplateToDocument(DocTemplate template) {
+        Document document = new Document();
+        document.setDocTitle(template.getDocTitle());
+        document.setTemplate(template);
+        document.setCompletedFields(template.getTemplateFields());
+        return document;
+    }
+
 }
