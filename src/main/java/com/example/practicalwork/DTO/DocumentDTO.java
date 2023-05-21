@@ -3,10 +3,15 @@ package com.example.practicalwork.DTO;
 import com.example.practicalwork.models.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,29 +22,62 @@ import java.util.Set;
 @Component
 @Schema (description = "Information about document")
 public class DocumentDTO {
+    @Parameter(hidden = true)
     private Long id;
+
+    @Schema (description = "Number of document")
+    @NotBlank
+    @Size(min = 1, max = 50)
     private String number;
+
+    @Schema (description = "Type of document")
+    @NotBlank
     @Enumerated(EnumType.STRING)
-    @JsonProperty("title")
+    @JsonProperty("type")
     private DocTitle docTitle;
 
+    @Parameter(hidden = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("created")
     private LocalDateTime createdAt;
+
+    @Parameter(hidden = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("updated")
     private LocalDateTime updatedAt;
 
+    @Schema (description = "List of related documents")
     @JsonProperty("related")
     private List<DocRelated> docRelatedList;
 
+    @Schema (description = "Initial template of the document")
+    @NotNull
     private DocTemplate template;
 
+    @Schema (description = "File of the document")
     private DocFile file;
 
-    @JsonProperty("fields")
-    private List<DocField> completedFields;
+    @Schema (description = "Fields of the document")
+    private List<DocField> fields;
 
+    @Schema (description = "Contractors of the document")
+    @NotNull
     private Set<ContractorDTO> contractors;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("number", number)
+                .append("type", docTitle)
+                .append("createdAt", createdAt)
+                .append("updatedAt", updatedAt)
+                .append("related", docRelatedList)
+                .append("template", template)
+                .append("file", file)
+                .append("fields", fields)
+                .append("contractors", contractors)
+                .toString();
+    }
 
 }

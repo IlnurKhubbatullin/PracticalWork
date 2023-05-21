@@ -23,6 +23,12 @@ public class DocFieldService {
         return docFieldRepository.findAll();
     }
 
+    public List<DocField> findCurrent() {
+        return docFieldRepository.findAll()
+                .stream().filter(el -> !el.isRemoved())
+                .toList();
+    }
+
     public DocField read(Long id) {
         Optional<DocField> foundField = docFieldRepository.findById(id);
         return foundField.orElseThrow(DocFieldNotFoundException::new);

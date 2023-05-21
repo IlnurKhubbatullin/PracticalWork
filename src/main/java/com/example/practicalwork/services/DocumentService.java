@@ -21,27 +21,39 @@ public class DocumentService {
 
         return docRepository.findAll();
     }
+
+    public List<Document> findCurrent() {
+
+        return docRepository.findAll()
+                .stream().filter(el -> !el.isRemoved())
+                .toList();
+    }
+
     public Document read(Long id) {
         Optional<Document> foundDocument = docRepository.findById(id);
         return foundDocument.orElseThrow(DocNotFoundException::new);
     }
+
     @Transactional
     public void create(Document document) {
 
         docRepository.save(document);
     }
+
     @Transactional
     public void delete(Long id) {
         Document doc = read(id);
         doc.setRemoved(true);
         docRepository.save(doc);
     }
+
     @Transactional
     public void revive(Long id) {
         Document doc = read(id);
         doc.setRemoved(false);
         docRepository.save(doc);
     }
+
     @Transactional
     public void update(Document entity) {
 

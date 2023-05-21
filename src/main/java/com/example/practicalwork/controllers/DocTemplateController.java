@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/template")
 @AllArgsConstructor
-@Tag (name = "DocTemplateController", description = "API for DocTemplate")
+@Tag (name = "DocTemplateController", description = "API for templates")
 public class DocTemplateController {
     private final DocTemplateService docTemplateService;
     private final DocTemplateConvertor docTemplateConvertor;
@@ -47,9 +47,9 @@ public class DocTemplateController {
     }
 
     @GetMapping("/{type}")
-    @Operation (summary = "Get current one type templates " +
+    @Operation (summary = "Get one type current templates " +
             "(contract, agreement, application, act, reference")
-    public List<DocTemplateDTO> getCurrentType(@PathVariable("type") String type) {
+    public List<DocTemplateDTO> getByType(@PathVariable("type") String type) {
         String enumType = type.toUpperCase();
         List<DocTemplateDTO> list = docTemplateService.findCurrent()
                 .stream().filter(el -> el.getDocTitle().name().equals(enumType))
@@ -63,7 +63,7 @@ public class DocTemplateController {
 
     @GetMapping("/{id}")
     @Operation (summary = "Get one template by id")
-    public DocTemplateDTO getTemplate(@PathVariable("id") Long id) {
+    public DocTemplateDTO getById(@PathVariable("id") Long id) {
         // Add exception
         return docTemplateConvertor.convertToDto(docTemplateService.read(id));
     }
@@ -71,7 +71,7 @@ public class DocTemplateController {
     @DeleteMapping("/{id}")
     @Operation (summary = "Delete one template by id")
 //    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<HttpStatus> deleteTemplate(@PathVariable("id") Long id) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
         // Add exception
         docTemplateService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
@@ -80,7 +80,7 @@ public class DocTemplateController {
     @PostMapping("/new")
     @Operation (summary = "Create new template")
 //    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<HttpStatus> createTemplate(@RequestBody DocTemplateDTO dto) {
+    public ResponseEntity<HttpStatus> create(@RequestBody DocTemplateDTO dto) {
         // Add exception
         docTemplateService.create(docTemplateConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
@@ -89,7 +89,7 @@ public class DocTemplateController {
     @PutMapping("/update")
     @Operation (summary = "Update template")
 //    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<HttpStatus> updateTemplate(@RequestBody DocTemplateDTO dto) {
+    public ResponseEntity<HttpStatus> update(@RequestBody DocTemplateDTO dto) {
         // Add exception
         docTemplateService.update(docTemplateConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
