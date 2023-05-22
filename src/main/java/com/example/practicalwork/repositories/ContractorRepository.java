@@ -1,19 +1,22 @@
 package com.example.practicalwork.repositories;
 
 import com.example.practicalwork.models.Contractor;
+import com.example.practicalwork.models.Credential;
+import com.example.practicalwork.models.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ContractorRepository extends JpaRepository <Contractor, Long> {
 
     List <Contractor> findAllContractors ();
-    Optional <Contractor> findContractorById (Long id);
+    Contractor findContractorById (Long id);
 
-    Optional <Contractor> findContractorByDocuments (Documents);
+    Contractor findContractorByDocuments (List<Document> documents);
+
+    Contractor findContractorByFilter (String firstName, String patronymic, String lastName, String country, Credential credential);
 
 
 }
