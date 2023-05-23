@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class ContractorService {
-
     private final ContractorRepository contractorRepository;
 
     @Autowired
