@@ -21,11 +21,11 @@ public class DocRelated implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long relatedId;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    private Long relatedId;
     private Boolean removed;
 
 }
