@@ -4,3 +4,23 @@ target/
 
 .gitignore
 src/main/java/com/example/practicalwork/controllers/FakeController.java
+src/main/java/com/example/practicalwork/controllers/CommentController.java
+src/main/java/com/example/practicalwork/controllers/ContractorController.java
+**/DTO/ContractorDTO.java
+**/DTO/DocFileDTO.java
+**/DTO/UserDTO.java
+**/models/Comment.java
+**/models/Contractor.java
+**/models/Credential.java
+**/models/DocFile.java
+**/models/Mimetype.java
+**/models/User.java
+**/repositories/CommentRepository.java
+**/repositories/ContractorRepository.java
+**/repositories/CredentialRepository.java
+**/repositories/DocFileRepository.java
+**/repositories/UserRepository.java
+**/services/CommentService.java
+**/services/ContractorService.java
+
+
