@@ -11,12 +11,12 @@ import java.util.List;
 @Repository
 public interface ContractorRepository extends JpaRepository <Contractor, Long> {
 
-    List <Contractor> findAllContractors ();
-    Contractor findContractorById (Long id);
-
-    Contractor findContractorByDocuments (List<Document> documents);
-
-    Contractor findContractorByFilter (String firstName, String patronymic, String lastName, String country, Credential credential);
+//    List <Contractor> findAllContractors ();
+//    Contractor findContractorById (Long id);
+//
+//    Contractor findContractorByDocuments (List<Document> documents);
+//
+//    Contractor findContractorByFilter (String firstName, String patronymic, String lastName, String country, Credential credential);
 
 
 }

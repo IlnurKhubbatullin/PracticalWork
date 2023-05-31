@@ -26,7 +26,7 @@ public class DocumentConvertor {
         Document document = new Document();
         document.setDocTitle(template.getDocTitle());
         document.setTemplate(template);
-        document.setCompletedFields(template.getTemplateFields());
+        document.setFields(template.getFields());
         return document;
     }
 

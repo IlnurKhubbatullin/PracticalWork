@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table (name = "templates")
 public class DocTemplate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,11 @@ public class DocTemplate implements Serializable {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    private boolean removed;
     private String title;
     private String version;
     private DocTitle docTitle;
-    private boolean removed;
-
-    @OneToMany
-//    @JoinColumn (name = "template_id")
-    private List<DocField> templateFields;
+    @OneToMany (cascade = CascadeType.ALL)
+    private List<DocField> fields;
 
 }

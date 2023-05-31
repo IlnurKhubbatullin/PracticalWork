@@ -5,6 +5,7 @@ import com.example.practicalwork.convertors.DocTemplateConvertor;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.utils.DocTemplateErrorResponse;
 import com.example.practicalwork.utils.DocTemplateListIsEmptyException;
+import com.example.practicalwork.utils.DocTemplateNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

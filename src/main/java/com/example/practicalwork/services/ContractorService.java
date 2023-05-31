@@ -18,37 +18,37 @@ public class ContractorService {
         this.contractorRepository = contractorRepository;
     }
 
-    public List <Contractor> allContractors () {
-        return contractorRepository.findAllContractors();
-    }
+//    public List <Contractor> allContractors () {
+//        return contractorRepository.findAllContractors();
+//    }
 
-    public Contractor findContractor (Long id) {
-        return contractorRepository.findContractorById(id);
-    }
+//    public Contractor findContractor (Long id) {
+//        return contractorRepository.findContractorById(id);
+//    }
 
-    public Contractor updateContractor (Long id, Contractor updateContractor) {
-            Contractor contractor = findContractor(id);
-            contractor.setFirstName(updateContractor.getFirstName());
-            contractor.setPatronymic(updateContractor.getPatronymic());
-            contractor.setLastName(updateContractor.getLastName());
-            contractor.setCountry(updateContractor.getCountry());
-            contractor.setPhone(updateContractor.getPhone());
-            contractor.setEmail(updateContractor.getEmail());
-            contractor.setTelegram(updateContractor.getTelegram());
-            contractor.setCredential(updateContractor.getCredential());
-            contractorRepository.save(contractor);
-            return contractor;
-    }
+//    public Contractor updateContractor (Long id, Contractor updateContractor) {
+////            Contractor contractor = findContractor(id);
+//            contractor.setFirstName(updateContractor.getFirstName());
+//            contractor.setPatronymic(updateContractor.getPatronymic());
+//            contractor.setLastName(updateContractor.getLastName());
+//            contractor.setCountry(updateContractor.getCountry());
+//            contractor.setPhone(updateContractor.getPhone());
+//            contractor.setEmail(updateContractor.getEmail());
+//            contractor.setTelegram(updateContractor.getTelegram());
+//            contractor.setCredential(updateContractor.getCredential());
+//            contractorRepository.save(contractor);
+//            return contractor;
+//    }
 
-    public Contractor findContractorByDocuments (List<Document> document) {
-            return contractorRepository.findContractorByDocuments(document);
-    }
+//    public Contractor findContractorByDocuments (List<Document> document) {
+//            return contractorRepository.findContractorByDocuments(document);
+//    }
 
     //УТОЧНИТЬ НИЖЕ
-    public Contractor findContractorByFilter (Contractor contractor) {
-        return contractorRepository.findContractorByFilter(contractor.getFirstName(), contractor.getPatronymic(),
-                contractor.getLastName(), contractor.getCountry(), contractor.getCredential());
-    }
+//    public Contractor findContractorByFilter (Contractor contractor) {
+//        return contractorRepository.findContractorByFilter(contractor.getFirstName(), contractor.getPatronymic(),
+//                contractor.getLastName(), contractor.getCountry(), contractor.getCredential());
+//    }
 
     public Contractor saveCreatedContractor (Contractor createdContractor) {
         Contractor contractor = new Contractor();
@@ -68,12 +68,12 @@ public class ContractorService {
         }
     }
 
-    public Contractor deleteContractor (Long id) {
-        Contractor contractor = findContractor(id);
-            contractor.setRemoved(true);
-            contractor.setDocuments(null);
-            contractorRepository.save(contractor);
-            return contractor;
-        }
+//    public Contractor deleteContractor (Long id) {
+//        Contractor contractor = findContractor(id);
+//            contractor.setRemoved(true);
+//            contractor.setDocuments(null);
+//            contractorRepository.save(contractor);
+//            return contractor;
+//        }
 
 }

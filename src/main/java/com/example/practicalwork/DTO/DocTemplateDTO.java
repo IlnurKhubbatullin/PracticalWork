@@ -38,7 +38,7 @@ public class DocTemplateDTO {
     private DocTitle docTitle;
     @Schema (description = "Fields of template")
     @JsonProperty("fields")
-    private List<DocField> templateFields;
+    private List<DocField> fields;
 
     @Override
     public String toString() {
@@ -47,7 +47,7 @@ public class DocTemplateDTO {
                 .append("title", title)
                 .append("version", version)
                 .append("type", docTitle)
-                .append("fields", templateFields)
+                .append("fields", fields)
                 .toString();
     }
 }

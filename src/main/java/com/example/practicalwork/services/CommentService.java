@@ -15,9 +15,9 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment findComment (Long id) {
-        return commentRepository.findContractorById(id);
-    }
+//    public Comment findComment (Long id) {
+//        return commentRepository.findContractorById(id);
+//    }
 
     public Comment saveCreateComment (Comment createComment) {
         Comment comment = new Comment();
@@ -29,17 +29,17 @@ public class CommentService {
         return null;
     }
 
-    public Comment updateComment (Long id, Comment updateComment) {
-        Comment comment = findComment(id);
-        comment.setText(updateComment.getText());
-        commentRepository.save(comment);
-        return comment;
-    }
-
-    public Comment deleteComment (Long id) {
-        Comment comment = findComment(id);
-        comment.setRemoved(true);
-        commentRepository.save(comment);
-        return comment;
-    }
+//    public Comment updateComment (Long id, Comment updateComment) {
+//        Comment comment = findComment(id);
+//        comment.setText(updateComment.getText());
+//        commentRepository.save(comment);
+//        return comment;
+//    }
+//
+//    public Comment deleteComment (Long id) {
+//        Comment comment = findComment(id);
+//        comment.setRemoved(true);
+//        commentRepository.save(comment);
+//        return comment;
+//    }
 }

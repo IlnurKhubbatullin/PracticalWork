@@ -2,6 +2,7 @@ package com.example.practicalwork.services;
 
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.repositories.DocTemplateRepository;
+import com.example.practicalwork.utils.DocTemplateNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
