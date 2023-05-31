@@ -33,6 +33,6 @@ public class DocField implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     @JsonIgnore
-    private Boolean removed;
+    private boolean removed;
 
 }

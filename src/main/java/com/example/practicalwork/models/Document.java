@@ -26,7 +26,7 @@ public class Document implements Serializable {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    private Boolean removed;
+    private boolean removed;
 
     @OneToMany
 //    @JoinColumn (name = "document_id")

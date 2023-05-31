@@ -15,6 +15,7 @@ public class PracticalWorkApplication {
 
     @Bean
     public ModelMapper modelMapper() {
+
         return new ModelMapper();
     }
 

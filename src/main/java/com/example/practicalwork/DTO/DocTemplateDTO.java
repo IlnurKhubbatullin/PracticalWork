@@ -1,6 +1,7 @@
 package com.example.practicalwork.DTO;
 
 import com.example.practicalwork.models.DocField;
+import com.example.practicalwork.models.DocTitle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class DocTemplateDTO {
     private Long id;
     private String title;
     private String version;
+    private DocTitle docTitle;
     @JsonProperty("fields")
     private List<DocField> templateFields;
 
