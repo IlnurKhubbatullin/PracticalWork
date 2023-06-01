@@ -1,5 +1,6 @@
 package com.example.practicalwork.convertors;
 
+import com.example.practicalwork.DTO.DocFieldDTO;
 import com.example.practicalwork.DTO.DocTemplateDTO;
 import com.example.practicalwork.models.DocTemplate;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,10 @@ public class DocTemplateConvertor {
     private ModelMapper modelMapper;
 
     public DocTemplateDTO convertToDto(DocTemplate entity) {
-
+//        DocTemplateDTO dto = modelMapper.map(entity, DocTemplateDTO.class);
+//        dto.setFields(entity.getFields().stream()
+//                .map(el -> modelMapper.map(el, DocFieldDTO.class)).toList());
+//        return dto;
         return modelMapper.map(entity, DocTemplateDTO.class);
     }
 

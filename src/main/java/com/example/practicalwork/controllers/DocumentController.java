@@ -25,7 +25,7 @@ public class DocumentController {
 
     @GetMapping("/all")
     @Operation (summary = "Get all current and removed documents")
-    public List<DocumentDTO> getAll() {
+    public List<DocumentDTO> getAllDocuments() {
         List<DocumentDTO> list = docService.findAll()
                 .stream().map(docConvertor::convertToDto)
                 .toList();

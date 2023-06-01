@@ -24,7 +24,7 @@ public class DocTemplateController {
 
     @GetMapping("/all")
     @Operation (summary = "Get all current and removed templates")
-    public List<DocTemplateDTO> getAll() {
+    public List<DocTemplateDTO> getAllTemplates() {
         List<DocTemplateDTO> list = docTemplateService.findAll()
                 .stream().map(docTemplateConvertor::convertToDto)
                 .toList();

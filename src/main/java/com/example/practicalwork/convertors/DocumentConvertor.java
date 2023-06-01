@@ -1,5 +1,6 @@
 package com.example.practicalwork.convertors;
 
+import com.example.practicalwork.DTO.DocFieldDTO;
 import com.example.practicalwork.DTO.DocumentDTO;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.Document;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class DocumentConvertor {
     private ModelMapper modelMapper;
+    private DocFieldConvertor docFieldConvertor;
 
     public DocumentDTO convertToDto(Document entity) {
-
+//        DocumentDTO dto = modelMapper.map(entity, DocumentDTO.class);
+//        dto.setFields(entity.getFields().stream()
+//                .map(el -> modelMapper.map(el, DocFieldDTO.class)).toList());
+//        return dto;
         return modelMapper.map(entity, DocumentDTO.class);
     }
 

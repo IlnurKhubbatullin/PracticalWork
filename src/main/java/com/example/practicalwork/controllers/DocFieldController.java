@@ -22,7 +22,7 @@ public class DocFieldController {
     private final DocFieldConvertor docFieldConvertor;
     @GetMapping("/all")
     @Operation(summary = "Get all current and removed fields")
-    public List<DocFieldDTO> getAll() {
+    public List<DocFieldDTO> getAllFields() {
         List<DocFieldDTO> list = docFieldService.findAll()
                 .stream().map(docFieldConvertor::convertToDto)
                 .toList();

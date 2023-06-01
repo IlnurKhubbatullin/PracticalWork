@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -46,23 +47,23 @@ public class DocumentDTO {
     @JsonProperty("updated")
     private LocalDateTime updatedAt;
 
-    @Schema (description = "List of related documents")
-    @JsonProperty("related")
-    private List<DocRelated> docRelatedList;
+//    @Schema (description = "List of related documents")
+//    @JsonProperty("related")
+//    private List<DocRelated> docRelatedList;
 
-    @Schema (description = "Initial template of the document")
-    @NotNull
-    private DocTemplate template;
+//    @Schema (description = "Initial template of the document")
+//    @NotNull
+//    private DocTemplate template;
 
     @Schema (description = "File of the document")
     private DocFile file;
 
     @Schema (description = "Fields of the document")
-    private List<DocField> fields;
+    private List<DocFieldDTO> fields;
 
-    @Schema (description = "Contractors of the document")
-    @NotNull
-    private Set<ContractorDTO> contractors;
+//    @Schema (description = "Contractors of the document")
+//    @NotNull
+//    private List<ContractorDTO> contractors;
 
     @Override
     public String toString() {
@@ -72,11 +73,11 @@ public class DocumentDTO {
                 .append("type", docTitle)
                 .append("createdAt", createdAt)
                 .append("updatedAt", updatedAt)
-                .append("related", docRelatedList)
-                .append("template", template)
+//                .append("related", docRelatedList)
+//                .append("template", template)
                 .append("file", file)
                 .append("fields", fields)
-                .append("contractors", contractors)
+//                .append("contractors", contractors)
                 .toString();
     }
 

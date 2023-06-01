@@ -38,7 +38,7 @@ public class DocTemplateDTO {
     private DocTitle docTitle;
     @Schema (description = "Fields of template")
     @JsonProperty("fields")
-    private List<DocField> fields;
+    private List<DocFieldDTO> fields;
 
     @Override
     public String toString() {

@@ -27,17 +27,17 @@ public class Document implements Serializable {
     private boolean removed;
     private String number;
     private DocTitle docTitle;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn (name = "document_id")
     private List<DocRelated> docRelatedList;
     @OneToOne (cascade = CascadeType.ALL)
     private DocTemplate template;
     @OneToOne (cascade = CascadeType.ALL)
     private DocFile file;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn (name = "document_id")
     private List<DocField> fields;
-    @ManyToMany (mappedBy = "documents", cascade = CascadeType.ALL)
-    private Set<Contractor> contractors;
+    @ManyToMany (mappedBy = "documents", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Contractor> contractors;
 
 }
