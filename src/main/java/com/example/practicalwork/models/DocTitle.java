@@ -7,5 +7,6 @@ public enum DocTitle implements Serializable {
     AGREEMENT,
     APPLICATION,
     ACT,
-    REFERENCE
+    REFERENCE;
+
 }

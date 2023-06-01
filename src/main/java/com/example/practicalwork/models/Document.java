@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,16 +19,15 @@ public class Document implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String number;
-    private DocTitle docTitle;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    private Boolean removed;
-
+    private boolean removed;
+    private String number;
+    private DocTitle docTitle;
     @OneToMany
-    @JoinColumn (name = "document_id")
+//    @JoinColumn (name = "document_id")
     private List<DocRelated> docRelatedList;
 
     @OneToOne
@@ -39,7 +37,7 @@ public class Document implements Serializable {
     private DocFile file;
 
     @OneToMany
-    @JoinColumn (name = "document_id")
+//    @JoinColumn (name = "document_id")
     private List<DocField> completedFields;
 
     @ManyToMany (mappedBy = "documents")
