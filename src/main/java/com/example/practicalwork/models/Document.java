@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table (name = "documents")
+@Table (name = "document")
 public class Document implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,14 @@ public class Document implements Serializable {
     private String number;
     private DocTitle docTitle;
     @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "document_id")
     private List<DocRelated> docRelatedList;
     @OneToOne (cascade = CascadeType.ALL)
     private DocTemplate template;
     @OneToOne (cascade = CascadeType.ALL)
     private DocFile file;
     @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "document_id")
     private List<DocField> fields;
     @ManyToMany (mappedBy = "documents", cascade = CascadeType.ALL)
     private Set<Contractor> contractors;

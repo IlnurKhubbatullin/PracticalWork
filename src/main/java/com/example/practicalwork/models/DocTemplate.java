@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "templates")
+@Table (name = "template")
 public class DocTemplate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,7 @@ public class DocTemplate implements Serializable {
     private String version;
     private DocTitle docTitle;
     @OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn (name = "template_id")
     private List<DocField> fields;
 
 }

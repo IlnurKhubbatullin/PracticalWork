@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "fields")
+@Table(name = "field")
 public class DocField implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
