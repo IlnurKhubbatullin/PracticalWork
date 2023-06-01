@@ -24,7 +24,7 @@ public class DocTemplateController {
 
     @GetMapping("/all")
     @Operation (summary = "Get all current and removed templates")
-    public List<DocTemplateDTO> getAllTemplates() {
+    public List<DocTemplateDTO> getAll() {
         List<DocTemplateDTO> list = docTemplateService.findAll()
                 .stream().map(docTemplateConvertor::convertToDto)
                 .toList();
@@ -46,7 +46,7 @@ public class DocTemplateController {
         return list;
     }
 
-    @GetMapping("/{type}")
+    @GetMapping("type/{type}")
     @Operation (summary = "Get one type current templates " +
             "(contract, agreement, application, act, reference")
     public List<DocTemplateDTO> getByType(@PathVariable("type") String type) {
