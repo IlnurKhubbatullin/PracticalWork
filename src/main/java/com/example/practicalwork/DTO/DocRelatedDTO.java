@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @Component
-@Schema(description = "Information about related documents")
+//@Schema(description = "Information about related documents")
 public class DocRelatedDTO {
     @JsonProperty("document_id")
     private Long relatedId;

@@ -16,12 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/field")
 @AllArgsConstructor
-@Tag(name = "DocFieldController", description = "API for fields")
+//@Tag(name = "DocFieldController", description = "API for fields")
 public class DocFieldController {
     private final DocFieldService docFieldService;
     private final DocFieldConvertor docFieldConvertor;
     @GetMapping("/all")
-    @Operation(summary = "Get all current and removed fields")
+//    @Operation(summary = "Get all current and removed fields")
     public List<DocFieldDTO> getAll() {
         List<DocFieldDTO> list = docFieldService.findAll()
                 .stream().map(docFieldConvertor::convertToDto)
@@ -33,7 +33,7 @@ public class DocFieldController {
     }
 
     @GetMapping("/current")
-    @Operation (summary = "Get current fields only (removed = false)")
+//    @Operation (summary = "Get current fields only (removed = false)")
     public List<DocFieldDTO> getCurrent() {
         List<DocFieldDTO> list = docFieldService.findCurrent()
                 .stream().map(docFieldConvertor::convertToDto)
@@ -45,14 +45,14 @@ public class DocFieldController {
     }
 
     @GetMapping("/{id}")
-    @Operation (summary = "Get one field by id")
+//    @Operation (summary = "Get one field by id")
     public DocFieldDTO getById(@PathVariable("id") Long id) {
         // Add exception
         return docFieldConvertor.convertToDto(docFieldService.read(id));
     }
 
     @DeleteMapping("/{id}")
-    @Operation (summary = "Delete one field by id")
+//    @Operation (summary = "Delete one field by id")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
         // Add exception
@@ -61,7 +61,7 @@ public class DocFieldController {
     }
 
     @PostMapping("/new")
-    @Operation (summary = "Create new field")
+//    @Operation (summary = "Create new field")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> create(@RequestBody DocFieldDTO dto) {
         // Add exception
@@ -70,7 +70,7 @@ public class DocFieldController {
     }
 
     @PutMapping("/update")
-    @Operation (summary = "Update field")
+//    @Operation (summary = "Update field")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocFieldDTO dto) {
         // Add exception

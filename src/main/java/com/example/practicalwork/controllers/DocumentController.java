@@ -17,14 +17,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/document")
 @AllArgsConstructor
-@Tag(name = "DocumentController", description = "API for documents")
+//@Tag(name = "DocumentController", description = "API for documents")
 public class DocumentController {
     private final DocumentService docService;
     private final DocTemplateService templateService;
     private final DocumentConvertor docConvertor;
 
     @GetMapping("/all")
-    @Operation (summary = "Get all current and removed documents")
+//    @Operation (summary = "Get all current and removed documents")
     public List<DocumentDTO> getAll() {
         List<DocumentDTO> list = docService.findAll()
                 .stream().map(docConvertor::convertToDto)
@@ -36,7 +36,7 @@ public class DocumentController {
     }
 
     @GetMapping("/current")
-    @Operation (summary = "Get current documents only (removed = false)")
+//    @Operation (summary = "Get current documents only (removed = false)")
     public List<DocumentDTO> getCurrent() {
         List<DocumentDTO> list = docService.findCurrent()
                 .stream().map(docConvertor::convertToDto)
@@ -48,7 +48,7 @@ public class DocumentController {
     }
 
     @GetMapping()
-    @Operation (summary = "Get documents filtered by type, number, date of creation, id of contractor and deletion status")
+//    @Operation (summary = "Get documents filtered by type, number, date of creation, id of contractor and deletion status")
     public List<DocumentDTO> getFiltered(@RequestParam(value = "type", required = false) String enumType,
                                          @RequestParam(value = "number", required = false) String number,
                                          @RequestParam(value = "date", required = false) String date,
@@ -73,7 +73,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    @Operation (summary = "Get one document by id")
+//    @Operation (summary = "Get one document by id")
     public DocumentDTO getById(@PathVariable("id") Long id) {
 
         // Add exception
@@ -81,7 +81,7 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation (summary = "Delete one document by id")
+//    @Operation (summary = "Delete one document by id")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
 
@@ -91,7 +91,7 @@ public class DocumentController {
     }
 
     @PostMapping("/new/from-template/{id}")
-    @Operation (summary = "Create new document from template by id")
+//    @Operation (summary = "Create new document from template by id")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> createFromTemplate(@PathVariable("id") Long idTemplate) {
         DocTemplate template = templateService.read(idTemplate);
@@ -101,7 +101,7 @@ public class DocumentController {
     }
 
     @PutMapping("/update")
-    @Operation (summary = "Update document")
+//    @Operation (summary = "Update document")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocumentDTO dto) {
         // Add exception

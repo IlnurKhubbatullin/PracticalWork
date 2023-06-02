@@ -12,42 +12,31 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Setter
 @Getter
 @Component
-@Schema (description = "Information about document's template")
+//@Schema (description = "Information about document's template")
 public class DocTemplateDTO {
 //    @Parameter (hidden = true)
     private Long id;
-    @Schema (description = "Title of template")
+//    @Schema (description = "Title of template")
     @NotBlank
     @Size (min = 1, max = 200)
     private String title;
-    @Schema (description = "Version of template")
+//    @Schema (description = "Version of template")
     @NotBlank
     @Size (min = 1, max = 50)
     private String version;
-    @Schema (description = "Type of template")
+//    @Schema (description = "Type of template")
     @NotBlank
     @Enumerated (EnumType.STRING)
     @JsonProperty("type")
     private DocTitle docTitle;
-    @Schema (description = "Fields of template")
+//    @Schema (description = "Fields of template")
     @JsonProperty("fields")
     private List<DocFieldDTO> fields;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("title", title)
-                .append("version", version)
-                .append("type", docTitle)
-                .append("fields", fields)
-                .toString();
-    }
 }
