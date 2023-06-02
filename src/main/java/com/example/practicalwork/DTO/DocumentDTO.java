@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 @Schema (description = "Information about document")
 public class DocumentDTO {
-    @Parameter(hidden = true)
+//    @Parameter(hidden = true)
     private Long id;
 
     @Schema (description = "Number of document")
@@ -47,10 +47,11 @@ public class DocumentDTO {
     @JsonProperty("updated")
     private LocalDateTime updatedAt;
 
-//    @Schema (description = "List of related documents")
-//    @JsonProperty("related")
-//    private List<DocRelated> docRelatedList;
+    @Schema (description = "List of related documents")
+    @JsonProperty("related")
+    private List<DocRelatedDTO> docRelatedList;
 
+// Unnecessary field in document json
 //    @Schema (description = "Initial template of the document")
 //    @NotNull
 //    private DocTemplate template;
@@ -73,7 +74,7 @@ public class DocumentDTO {
                 .append("type", docTitle)
                 .append("createdAt", createdAt)
                 .append("updatedAt", updatedAt)
-//                .append("related", docRelatedList)
+                .append("related", docRelatedList)
 //                .append("template", template)
                 .append("file", file)
                 .append("fields", fields)

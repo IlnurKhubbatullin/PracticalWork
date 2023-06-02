@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Schema(description = "Information about field of document and template")
 public class DocFieldDTO {
-    @Parameter(hidden = true)
+//    @Parameter(hidden = true)
     private Long id;
     @Schema (description = "Name of field")
     @NotBlank

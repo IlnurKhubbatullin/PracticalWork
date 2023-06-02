@@ -23,8 +23,8 @@ To carry out this activity, the Contractor uses its own staff, and, if necessary
 insert into schema_system.field (default_value,
         name, placeholder,
         removed, type, created_at, updated_at)
-values ('Other conditions. When providing services in accordance with this Agreement, each of the Parties undertakes to take into account the recommendations of the other Party regarding the subject matter of this Agreement. The Parties undertake to immediately inform each other about the difficulties that impede the fulfillment of the terms of this Agreement, in order to take the necessary measures in a timely manner.'
-           , 'Footer of contract', 'Details of the parties to the agreement',
+values ('Other conditions. When providing services in accordance with this Agreement, each of the Parties undertakes to take into account the recommendations of the other Party regarding the subject matter of this Agreement. The Parties undertake to immediately inform each other about the difficulties that impede the fulfillment of the terms of this Agreement, in order to take the necessary measures in a timely manner.',
+        'Footer of contract', 'Finish part of contract',
         false, 'Contract field', now(), now());
 
 

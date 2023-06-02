@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 @Schema (description = "Information about document's template")
 public class DocTemplateDTO {
-    @Parameter (hidden = true)
+//    @Parameter (hidden = true)
     private Long id;
     @Schema (description = "Title of template")
     @NotBlank
