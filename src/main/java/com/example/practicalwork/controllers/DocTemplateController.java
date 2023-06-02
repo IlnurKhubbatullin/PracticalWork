@@ -17,13 +17,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/template")
 @AllArgsConstructor
-//@Tag (name = "DocTemplateController", description = "API for templates")
+@Tag(name = "DocTemplateController", description = "API for templates")
 public class DocTemplateController {
     private final DocTemplateService docTemplateService;
     private final DocTemplateConvertor docTemplateConvertor;
 
     @GetMapping("/all")
-//    @Operation (summary = "Get all current and removed templates")
+    @Operation(summary = "Get templates", description = "Get all current and removed templates")
     public List<DocTemplateDTO> getAll() {
         List<DocTemplateDTO> list = docTemplateService.findAll()
                 .stream().map(docTemplateConvertor::convertToDto)
@@ -35,7 +35,7 @@ public class DocTemplateController {
     }
 
     @GetMapping("/current")
-//    @Operation (summary = "Get current templates only (removed = false)")
+    @Operation(summary = "Get templates", description = "Get current templates only (removed = false)")
     public List<DocTemplateDTO> getCurrent() {
         List<DocTemplateDTO> list = docTemplateService.findCurrent()
                 .stream().map(docTemplateConvertor::convertToDto)
@@ -47,8 +47,7 @@ public class DocTemplateController {
     }
 
     @GetMapping("type/{type}")
-//    @Operation (summary = "Get one type current templates " +
-//            "(contract, agreement, application, act, reference")
+    @Operation(summary = "Get templates", description = "Get one type current templates (contract, agreement, application, act, reference)")
     public List<DocTemplateDTO> getByType(@PathVariable("type") String type) {
         String enumType = type.toUpperCase();
         List<DocTemplateDTO> list = docTemplateService.findCurrent()
@@ -62,34 +61,38 @@ public class DocTemplateController {
     }
 
     @GetMapping("/{id}")
-//    @Operation (summary = "Get one template by id")
+    @Operation(summary = "Get template", description = "Get one template by id")
     public DocTemplateDTO getById(@PathVariable("id") Long id) {
+
         // Add exception
         return docTemplateConvertor.convertToDto(docTemplateService.read(id));
     }
 
     @DeleteMapping("/{id}")
-//    @Operation (summary = "Delete one template by id")
+    @Operation(summary = "Delete template", description = "Delete one template by id")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
+
         // Add exception
         docTemplateService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/new")
-//    @Operation (summary = "Create new template")
+    @Operation(summary = "Create template", description = "Create new template using fields id in json")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> create(@RequestBody DocTemplateDTO dto) {
+
         // Add exception
         docTemplateService.create(docTemplateConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PutMapping("/update")
-//    @Operation (summary = "Update template")
+    @Operation(summary = "Update template", description = "Update current template by id in json")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocTemplateDTO dto) {
+
         // Add exception
         docTemplateService.update(docTemplateConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);

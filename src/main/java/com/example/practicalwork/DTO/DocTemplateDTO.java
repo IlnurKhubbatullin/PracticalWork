@@ -1,6 +1,5 @@
 package com.example.practicalwork.DTO;
 
-import com.example.practicalwork.models.DocField;
 import com.example.practicalwork.models.DocTitle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,24 +17,24 @@ import java.util.List;
 @Setter
 @Getter
 @Component
-//@Schema (description = "Information about document's template")
+@Schema (description = "Information about document's template")
 public class DocTemplateDTO {
 //    @Parameter (hidden = true)
     private Long id;
-//    @Schema (description = "Title of template")
+    @Schema (description = "Title of template")
     @NotBlank
     @Size (min = 1, max = 200)
     private String title;
-//    @Schema (description = "Version of template")
+    @Schema (description = "Version of template")
     @NotBlank
     @Size (min = 1, max = 50)
     private String version;
-//    @Schema (description = "Type of template")
+    @Schema (description = "Type of template")
     @NotBlank
     @Enumerated (EnumType.STRING)
     @JsonProperty("type")
     private DocTitle docTitle;
-//    @Schema (description = "Fields of template")
+    @Schema (description = "Fields of template")
     @JsonProperty("fields")
     private List<DocFieldDTO> fields;
 

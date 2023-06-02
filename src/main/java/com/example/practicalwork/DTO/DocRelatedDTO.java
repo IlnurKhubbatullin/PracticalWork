@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @Component
-//@Schema(description = "Information about related documents")
+@Schema(description = "Information about related documents")
 public class DocRelatedDTO {
+    @Schema (description = "ID's of related documents")
     @JsonProperty("document_id")
     private Long relatedId;
 }
