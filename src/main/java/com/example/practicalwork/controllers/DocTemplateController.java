@@ -70,7 +70,6 @@ public class DocTemplateController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete template", description = "Delete one template by id")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
 
         // Add exception
@@ -80,7 +79,6 @@ public class DocTemplateController {
 
     @PostMapping("/new")
     @Operation(summary = "Create template", description = "Create new template using fields id in json")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> create(@RequestBody DocTemplateDTO dto) {
 
         // Add exception
@@ -90,7 +88,6 @@ public class DocTemplateController {
 
     @PutMapping("/update")
     @Operation(summary = "Update template", description = "Update current template by id in json")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocTemplateDTO dto) {
 
         // Add exception

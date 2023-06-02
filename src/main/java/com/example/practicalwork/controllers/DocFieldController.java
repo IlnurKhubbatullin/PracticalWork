@@ -55,7 +55,6 @@ public class DocFieldController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete field", description = "Delete one field by id")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
 
         // Add exception
@@ -65,7 +64,6 @@ public class DocFieldController {
 
     @PostMapping("/new")
     @Operation(summary = "Create field", description = "Create new field using data in json")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> create(@RequestBody DocFieldDTO dto) {
 
         // Add exception
@@ -75,7 +73,6 @@ public class DocFieldController {
 
     @PutMapping("/update")
     @Operation(summary = "Update field", description = "Update current field by id in json")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocFieldDTO dto) {
 
         // Add exception

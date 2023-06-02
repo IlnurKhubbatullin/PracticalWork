@@ -82,7 +82,6 @@ public class DocumentController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete document", description = "Delete one document by id")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
 
         // Add exception
@@ -92,7 +91,6 @@ public class DocumentController {
 
     @PostMapping("/new/from-template/{id}")
     @Operation(summary = "Create document", description = "Create new document from template by id")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> createFromTemplate(@PathVariable("id") Long idTemplate) {
         DocTemplate template = templateService.read(idTemplate);
 
@@ -103,13 +101,21 @@ public class DocumentController {
 
     @PutMapping("/update")
     @Operation(summary = "Update document", description = "Update current document by id in json")
-//    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> update(@RequestBody DocumentDTO dto) {
 
         // Add exception
         docService.update(docConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    @PostMapping("/file-to-document/{id}")
+    @Operation(summary = "Create file", description = "Create file using document id")
+    public ResponseEntity<HttpStatus> createFileFromDocument (@PathVariable("id") Long idTemplate) {
+
+        // Converter document to file
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 
     @ExceptionHandler
     public ResponseEntity<DocumentErrorResponse> handelException(DocListIsEmptyException e) {
