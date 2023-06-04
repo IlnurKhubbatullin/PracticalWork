@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -30,9 +29,9 @@ public class DocumentDTO {
 
     @Schema (description = "Type of document")
     @NotBlank
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @JsonProperty("type")
-    private DocTitle docTitle;
+    private String docTitle;
 
     @Parameter(hidden = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

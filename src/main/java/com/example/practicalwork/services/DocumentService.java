@@ -1,9 +1,12 @@
 package com.example.practicalwork.services;
 
 import com.example.practicalwork.DTO.DocumentDTO;
+import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.Document;
 import com.example.practicalwork.repositories.DocRepository;
 import com.example.practicalwork.utils.DocNotFoundException;
+import com.example.practicalwork.utils.DocTemplateNotDeletedException;
+import com.example.practicalwork.utils.DocumentNotDeletedException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,10 +51,14 @@ public class DocumentService {
     }
 
     @Transactional
-    public void revive(Long id) {
+    public void recovery(Long id) {
         Document doc = read(id);
-        doc.setRemoved(false);
-        docRepository.save(doc);
+        if (!doc.isRemoved()) {
+            throw new DocumentNotDeletedException();
+        } else {
+            doc.setRemoved(false);
+            docRepository.save(doc);
+        }
     }
 
     @Transactional

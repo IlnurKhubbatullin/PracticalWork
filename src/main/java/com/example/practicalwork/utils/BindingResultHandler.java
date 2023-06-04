@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 public class BindingResultHandler {
-    public void createMessageAndThrowException(BindingResult bindingResult) {
+    public String createErrorMessage(BindingResult bindingResult) {
         StringBuilder bld = new StringBuilder();
 
 //            bindingResult.getFieldErrors().forEach(error -> bld.append(error
@@ -23,6 +23,7 @@ public class BindingResultHandler {
                 bld.append(", ");
             }
         }
-        throw new DocFieldNotCreatedException(bld.toString());
+
+        return bld.toString();
     }
 }

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +29,11 @@ public class DocTemplateDTO {
     @Size (min = 1, max = 50)
     private String version;
     @Schema (description = "Type of template")
-    @NotBlank
-    @Enumerated (EnumType.STRING)
+//    @Enumerated (EnumType.STRING)
     @JsonProperty("type")
-    private DocTitle docTitle;
+    @NotBlank
+    private String docTitle;
     @Schema (description = "Fields of template")
-    @JsonProperty("fields")
     private List<DocFieldDTO> fields;
 
 }

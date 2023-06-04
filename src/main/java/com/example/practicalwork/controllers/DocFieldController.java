@@ -27,25 +27,25 @@ public class DocFieldController {
     @GetMapping("/all")
     @Operation(summary = "Get fields", description = "Get all current and removed fields")
     public List<DocFieldDTO> getAll() {
-        List<DocFieldDTO> list = docFieldService.findAll()
+        List<DocFieldDTO> dto = docFieldService.findAll()
                 .stream().map(docFieldConvertor::convertToDto)
                 .toList();
-        if (list.isEmpty()) {
+        if (dto.isEmpty()) {
             throw new DocFieldListIsEmptyException();
         }
-        return list;
+        return dto;
     }
 
     @GetMapping("/current")
     @Operation(summary = "Get fields", description = "Get current fields only (removed = false)")
     public List<DocFieldDTO> getCurrent() {
-        List<DocFieldDTO> list = docFieldService.findCurrent()
+        List<DocFieldDTO> dto = docFieldService.findCurrent()
                 .stream().map(docFieldConvertor::convertToDto)
                 .toList();
-        if (list.isEmpty()) {
+        if (dto.isEmpty()) {
             throw new DocFieldListIsEmptyException();
         }
-        return list;
+        return dto;
     }
 
     @GetMapping("/{id}")
@@ -79,7 +79,8 @@ public class DocFieldController {
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid DocFieldDTO dto,
                                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResultHandler.createMessageAndThrowException(bindingResult);
+            String str = bindingResultHandler.createErrorMessage(bindingResult);
+            throw new DocFieldNotCreatedException(str);
         }
         docFieldService.create(docFieldConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
@@ -90,7 +91,8 @@ public class DocFieldController {
     public ResponseEntity<HttpStatus> update(@RequestBody DocFieldDTO dto,
                                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResultHandler.createMessageAndThrowException(bindingResult);
+            String str = bindingResultHandler.createErrorMessage(bindingResult);
+            throw new DocFieldNotCreatedException(str);
         }
         docFieldService.update(docFieldConvertor.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
@@ -100,9 +102,9 @@ public class DocFieldController {
     public ResponseEntity<DocFieldErrorResponse> handlerException(DocFieldListIsEmptyException e) {
         e.printStackTrace();
         DocFieldErrorResponse response = new DocFieldErrorResponse();
-        response.setMessage("There are no fields");
+        response.setMessage("No fields for this request");
         response.setTimestamp(new Date());
-        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler

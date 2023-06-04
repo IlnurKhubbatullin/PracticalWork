@@ -27,7 +27,7 @@ public class DocTemplate implements Serializable {
     private String title;
     private String version;
     private DocTitle docTitle;
-    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn (name = "template_id")
     private List<DocField> fields;
 
