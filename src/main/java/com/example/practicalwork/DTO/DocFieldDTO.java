@@ -25,9 +25,13 @@ public class DocFieldDTO {
     @Size(min = 1, max = 50)
     private String type;
     @Schema (description = "Placeholder of field")
+    @NotBlank
+    @Size(min = 1, max = 200)
     private String placeholder;
     @Schema (description = "Default value of field")
+    @NotBlank
     @JsonProperty("default")
+    @Size(min = 1, max = 2000)
     private String defaultValue;
 
 }
