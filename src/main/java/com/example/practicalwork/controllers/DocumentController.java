@@ -152,7 +152,7 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage("No documents for this request");
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -161,7 +161,7 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage("Document not found");
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -170,7 +170,7 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage("Document doesn't need in recovery");
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
@@ -179,7 +179,7 @@ public class DocumentController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("Template not found");
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -188,7 +188,7 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage("Incorrect type of document");
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -197,7 +197,7 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage(e.getMessage());
-        response.setTimestamp(new Date());
+//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
