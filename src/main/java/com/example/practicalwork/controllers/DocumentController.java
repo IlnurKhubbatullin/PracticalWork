@@ -5,6 +5,8 @@ import com.example.practicalwork.DTO.DocumentDTO;
 import com.example.practicalwork.convertors.DocumentConvertor;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
+import com.example.practicalwork.models.Document;
+import com.example.practicalwork.services.ConvertToDocxService;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.*;
@@ -12,12 +14,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class DocumentController {
     private final DocTemplateService templateService;
     private final DocumentConvertor docConvertor;
     private final BindingResultHandler bindingResultHandler;
+    private final ConvertToDocxService convertToDocxService;
 
     @GetMapping("/all")
     @Operation(summary = "Get documents", description = "Get all current and removed documents")
@@ -139,11 +144,12 @@ public class DocumentController {
         } dto.setDocTitle(type.toUpperCase());
     }
 
-    @PostMapping("/file-to-document/{id}")
+    @GetMapping("/file/{id}")
     @Operation(summary = "Create file", description = "Create file using document id")
-    public ResponseEntity<HttpStatus> createFileFromDocument(@PathVariable("id") Long idTemplate) {
+    public ResponseEntity<HttpStatus> createFileFromDocument(@PathVariable("id") Long id) throws IOException {
 
-        // To do document to file converter
+        convertToDocxService.createDocx(id);
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
