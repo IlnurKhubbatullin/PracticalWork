@@ -143,7 +143,6 @@ public class DocTemplateController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("No templates for this request");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -152,7 +151,6 @@ public class DocTemplateController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("Template not found");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -161,7 +159,6 @@ public class DocTemplateController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("Template doesn't need in recovery");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
@@ -170,7 +167,6 @@ public class DocTemplateController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage(e.getMessage());
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -179,7 +175,6 @@ public class DocTemplateController {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("Incorrect type of template");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

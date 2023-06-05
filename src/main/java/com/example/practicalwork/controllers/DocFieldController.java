@@ -103,7 +103,6 @@ public class DocFieldController {
         e.printStackTrace();
         DocFieldErrorResponse response = new DocFieldErrorResponse();
         response.setMessage("No fields for this request");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -112,7 +111,6 @@ public class DocFieldController {
         e.printStackTrace();
         DocFieldErrorResponse response = new DocFieldErrorResponse();
         response.setMessage("Field not found");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
@@ -121,7 +119,6 @@ public class DocFieldController {
         e.printStackTrace();
         DocFieldErrorResponse response = new DocFieldErrorResponse();
         response.setMessage("Field doesn't need in recovery");
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
@@ -130,7 +127,6 @@ public class DocFieldController {
         e.printStackTrace();
         DocFieldErrorResponse response = new DocFieldErrorResponse();
         response.setMessage(e.getMessage());
-//        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
