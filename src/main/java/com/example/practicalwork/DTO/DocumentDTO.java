@@ -20,6 +20,7 @@ import java.util.List;
 @Schema (description = "Information about document")
 public class DocumentDTO {
 //    @Parameter(hidden = true)
+    @Schema (description = "Id of document")
     private Long id;
 
     @Schema (description = "Number of document")

@@ -2,28 +2,33 @@ package com.example.practicalwork.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "doc_file")
-public class DocFile {
-
+@Table(name = "file")
+public class DocFile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+    private boolean removed;
     private String name;
+    private Mimetype mimetype;
     private String store;
     private Long size;
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "user_id")
-    private User user;
-    private Mimetype mimetype;
     private String description;
-    private boolean removed;
+    @OneToOne (cascade = CascadeType.MERGE)
+    private Document document;
+
 }
