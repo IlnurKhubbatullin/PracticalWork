@@ -1,12 +1,11 @@
 package com.example.practicalwork.controllers;
 
-import com.example.practicalwork.DTO.DocTemplateDTO;
 import com.example.practicalwork.DTO.DocumentDTO;
-import com.example.practicalwork.convertors.DocumentConvertor;
+import com.example.practicalwork.converters.*;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
 import com.example.practicalwork.models.Document;
-import com.example.practicalwork.services.ConvertToDocxService;
+import com.example.practicalwork.models.Mimetype;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.*;
@@ -14,15 +13,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.apache.poi.xwpf.usermodel.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,9 +28,12 @@ import java.util.List;
 public class DocumentController {
     private final DocumentService docService;
     private final DocTemplateService templateService;
-    private final DocumentConvertor docConvertor;
+    private final DocumentConverter docConvertor;
     private final BindingResultHandler bindingResultHandler;
-    private final ConvertToDocxService convertToDocxService;
+    private final ToDocxConverter toDocxConverter;
+    private final ToXlsxConverter toXlsxConverter;
+    private final ToPdfConverter toPdfConverter;
+    private final ToZipConverter toZipConverter;
 
     @GetMapping("/all")
     @Operation(summary = "Get documents", description = "Get all current and removed documents")
@@ -140,17 +139,36 @@ public class DocumentController {
     void throwExceptionIfTypeIncorrect(DocumentDTO dto) {
         String type = DocTitle.findByValue(dto.getDocTitle());
         if (type == null) {
-            throw new DocumentUnknownTypeOfDocument();
+            throw new DocumentUnknownTypeOfDocException();
         } dto.setDocTitle(type.toUpperCase());
     }
 
-    @GetMapping("/file/{id}")
-    @Operation(summary = "Create file", description = "Create file using document id")
-    public ResponseEntity<HttpStatus> createFileFromDocument(@PathVariable("id") Long id) throws IOException {
+    @GetMapping("/{id}/{format}")
+    @Operation(summary = "Create file", description = "Create file using document id. Formats: docx, xlsx, pdf. To create an archive use ?zip=true, default value false")
+    public ResponseEntity<HttpStatus> createFileFromDoc(@PathVariable("id") Long id,
+                                                        @PathVariable("format") String f,
+                                                        @RequestParam(value = "zip", required = false,
+                                                                defaultValue = "false") boolean isZip)
+                                                        throws IOException {
+        Document doc = docService.read(id);
 
-        convertToDocxService.createDocx(id);
+        Mimetype format = Mimetype.findByValue(f);
+        if (format == null) {
+            throw new DocumentInvalidFormatOfFileException();
+        }
+
+        switch (format) {
+            case DOCX -> toDocxConverter.convert(doc);
+            case XLSX -> toXlsxConverter.convert(doc);
+            case PDF -> toPdfConverter.convert(doc);
+        }
+
+        if (isZip) {
+            toZipConverter.convert(doc);
+        }
 
         return ResponseEntity.ok(HttpStatus.OK);
+
     }
 
     @ExceptionHandler
@@ -186,7 +204,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentUnknownTypeOfDocument e) {
+    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentUnknownTypeOfDocException e) {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage("Incorrect type of document");
@@ -198,6 +216,14 @@ public class DocumentController {
         e.printStackTrace();
         DocumentErrorResponse response = new DocumentErrorResponse();
         response.setMessage(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentInvalidFormatOfFileException e) {
+        e.printStackTrace();
+        DocumentErrorResponse response = new DocumentErrorResponse();
+        response.setMessage("Invalid format of file. Allowed: /docx, /xlsx, /pdf");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

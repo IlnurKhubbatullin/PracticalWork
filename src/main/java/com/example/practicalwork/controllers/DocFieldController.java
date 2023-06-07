@@ -1,7 +1,7 @@
 package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.DocFieldDTO;
-import com.example.practicalwork.convertors.DocFieldConvertor;
+import com.example.practicalwork.converters.DocFieldConverter;
 import com.example.practicalwork.services.DocFieldService;
 import com.example.practicalwork.utils.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.util.Date;
+
 import java.util.List;
 
 @RestController
@@ -21,7 +21,7 @@ import java.util.List;
 @Tag(name = "DocFieldController", description = "API for fields")
 public class DocFieldController {
     private final DocFieldService docFieldService;
-    private final DocFieldConvertor docFieldConvertor;
+    private final DocFieldConverter docFieldConvertor;
     private final BindingResultHandler bindingResultHandler;
 
     @GetMapping("/all")

@@ -1,7 +1,7 @@
 package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.DocTemplateDTO;
-import com.example.practicalwork.convertors.DocTemplateConvertor;
+import com.example.practicalwork.converters.DocTemplateConverter;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
 import com.example.practicalwork.services.DocTemplateService;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,7 +23,7 @@ import java.util.List;
 @Tag(name = "DocTemplateController", description = "API for templates")
 public class DocTemplateController {
     private final DocTemplateService docTemplateService;
-    private final DocTemplateConvertor docTemplateConvertor;
+    private final DocTemplateConverter docTemplateConvertor;
     private final BindingResultHandler bindingResultHandler;
 
     @GetMapping("/all")
@@ -57,7 +56,7 @@ public class DocTemplateController {
     public List<DocTemplateDTO> getByType(@PathVariable("type") String type) {
 
         if (DocTitle.findByValue(type) == null) {
-            throw new DocTemplateUnknownTypeOfDocument();
+            throw new DocTemplateUnknownTypeOfDocException();
         }
 
         List<DocTemplate> list = docTemplateService.findCurrent()
@@ -134,8 +133,9 @@ public class DocTemplateController {
     void throwExceptionIfTypeIncorrect(DocTemplateDTO dto) {
         String type = DocTitle.findByValue(dto.getDocTitle());
         if (type == null) {
-            throw new DocTemplateUnknownTypeOfDocument();
-        } dto.setDocTitle(type.toUpperCase());
+            throw new DocTemplateUnknownTypeOfDocException();
+        }
+        dto.setDocTitle(type.toUpperCase());
     }
 
     @ExceptionHandler
@@ -171,7 +171,7 @@ public class DocTemplateController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateUnknownTypeOfDocument e) {
+    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateUnknownTypeOfDocException e) {
         e.printStackTrace();
         DocTemplateErrorResponse response = new DocTemplateErrorResponse();
         response.setMessage("Incorrect type of template");

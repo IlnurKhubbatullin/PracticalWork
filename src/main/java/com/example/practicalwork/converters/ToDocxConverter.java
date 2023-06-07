@@ -1,7 +1,8 @@
-package com.example.practicalwork.services;
+package com.example.practicalwork.converters;
 
 import com.example.practicalwork.models.DocField;
 import com.example.practicalwork.models.Document;
+import com.example.practicalwork.services.DocumentService;
 import lombok.AllArgsConstructor;
 import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xwpf.usermodel.*;
@@ -12,11 +13,9 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ConvertToDocxService {
+public class ToDocxConverter {
     private DocumentService docService;
-    public void createDocx(Long id) throws IOException {
-
-        Document doc = docService.read(id);
+    public void convert(Document doc) throws IOException {
 
         // Create document content
         StringBuilder fileText = new StringBuilder();

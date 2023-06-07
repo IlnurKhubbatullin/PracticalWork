@@ -1,6 +1,5 @@
-package com.example.practicalwork.convertors;
+package com.example.practicalwork.converters;
 
-import com.example.practicalwork.DTO.DocFieldDTO;
 import com.example.practicalwork.DTO.DocTemplateDTO;
 import com.example.practicalwork.models.DocTemplate;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class DocTemplateConvertor {
+public class DocTemplateConverter {
     private ModelMapper modelMapper;
 
     public DocTemplateDTO convertToDto(DocTemplate entity) {

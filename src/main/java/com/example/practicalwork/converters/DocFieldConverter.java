@@ -1,4 +1,4 @@
-package com.example.practicalwork.convertors;
+package com.example.practicalwork.converters;
 
 import com.example.practicalwork.DTO.DocFieldDTO;
 import com.example.practicalwork.models.DocField;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class DocFieldConvertor {
+public class DocFieldConverter {
     private ModelMapper modelMapper;
 
     public DocFieldDTO convertToDto(DocField entity) {
