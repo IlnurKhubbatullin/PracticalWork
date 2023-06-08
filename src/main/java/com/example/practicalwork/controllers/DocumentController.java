@@ -61,8 +61,8 @@ public class DocumentController {
         return dto;
     }
 
-    @GetMapping()
-    @Operation(summary = "Get documents", description = "Get documents filtered by type, number, date of creation, id of contractor and deletion status")
+    @GetMapping("/filter")
+    @Operation(summary = "Get documents", description = "Get documents filtered by type, number, date(YYYY-MM-DD) of creation, id of contractor and deletion status")
     public List<DocumentDTO> getFiltered(@RequestParam(value = "type", required = false) String enumType,
                                          @RequestParam(value = "number", required = false) String number,
                                          @RequestParam(value = "date", required = false) String date,
@@ -71,12 +71,36 @@ public class DocumentController {
                                          String current) {
 
         List<DocumentDTO> list = docService.findAll().stream()
-                .filter(el -> !el.isRemoved() && Boolean.parseBoolean(current))
-                .filter(el -> el.getDocTitle().name().equals(enumType) && !enumType.isEmpty())
-                .filter(el -> el.getContractors()
-                        .stream().anyMatch(c -> c.getId().equals(Long.parseLong(contractorId))) && !contractorId.isEmpty())
-                .filter(el -> el.getNumber().contains(number) && !number.isEmpty())
-                .filter(el -> date.equals(el.getCreatedAt().toString()) && !date.isEmpty())
+                .filter(el -> {
+                    if (Boolean.parseBoolean(current)) {
+                        return !el.isRemoved();
+                    } else return true;
+                })
+
+                .filter(el -> {
+                    if (enumType != null) {
+                        return el.getDocTitle().name().equalsIgnoreCase(enumType);
+                    } else return true;
+                })
+
+                .filter(el -> {
+                    if (contractorId != null) {
+                        return el.getContractors().stream().anyMatch(c -> c.getId().equals(Long.parseLong(contractorId)));
+                    } else return true;
+                })
+
+                .filter(el -> {
+                    if (number != null) {
+                        return el.getNumber().contains(number);
+                    } else return true;
+                })
+
+                .filter(el -> {
+                    if (date != null) {
+                        return date.equals(el.getCreatedAt().toString().substring(0, 10));
+                    } else return true;
+                })
+
                 .map(docConverter::convertToDto)
                 .toList();
 
