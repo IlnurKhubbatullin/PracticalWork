@@ -1,14 +1,12 @@
 package com.example.practicalwork.services;
 
 import com.example.practicalwork.models.DocFile;
-import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.repositories.DocFileRepository;
 import com.example.practicalwork.utils.file.DocFileNotDeletedException;
 import com.example.practicalwork.utils.file.DocFileNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +59,9 @@ public class DocFileService {
     @Transactional
     public void update(DocFile entity) {
 
-        // Change to ModelMapper
+        // To do Change to ModelMapper
+
+        // To do Full update with converting entity to file ang deleting previous version of file
 
         DocFile myDocFile = read(entity.getId());
         myDocFile.setName(entity.getName());

@@ -30,7 +30,7 @@ import java.util.List;
 public class DocumentController {
     private final DocumentService docService;
     private final DocTemplateService templateService;
-    private final DocumentConverter docConvertor;
+    private final DocumentConverter docConverter;
     private final BindingResultHandler bindingResultHandler;
     private final ToDocxConverter toDocxConverter;
     private final ToXlsxConverter toXlsxConverter;
@@ -41,7 +41,7 @@ public class DocumentController {
     @Operation(summary = "Get documents", description = "Get all current and removed documents")
     public List<DocumentDTO> getAll() {
         List<DocumentDTO> dto = docService.findAll()
-                .stream().map(docConvertor::convertToDto)
+                .stream().map(docConverter::convertToDto)
                 .toList();
         if (dto.isEmpty()) {
             throw new DocListIsEmptyException();
@@ -53,7 +53,7 @@ public class DocumentController {
     @Operation(summary = "Get documents", description = "Get current documents only (removed = false)")
     public List<DocumentDTO> getCurrent() {
         List<DocumentDTO> dto = docService.findCurrent()
-                .stream().map(docConvertor::convertToDto)
+                .stream().map(docConverter::convertToDto)
                 .toList();
         if (dto.isEmpty()) {
             throw new DocListIsEmptyException();
@@ -77,7 +77,7 @@ public class DocumentController {
                         .stream().anyMatch(c -> c.getId().equals(Long.parseLong(contractorId))) && !contractorId.isEmpty())
                 .filter(el -> el.getNumber().contains(number) && !number.isEmpty())
                 .filter(el -> date.equals(el.getCreatedAt().toString()) && !date.isEmpty())
-                .map(docConvertor::convertToDto)
+                .map(docConverter::convertToDto)
                 .toList();
 
         if (list.isEmpty()) {
@@ -91,7 +91,7 @@ public class DocumentController {
     public DocumentDTO getById(@PathVariable("id") Long id) {
 
         // Exception set in DocumentService
-        return docConvertor.convertToDto(docService.read(id));
+        return docConverter.convertToDto(docService.read(id));
     }
 
     @DeleteMapping("/{id}")
@@ -119,7 +119,7 @@ public class DocumentController {
         // Exception set in DocTemplateService
         DocTemplate template = templateService.read(idTemplate);
 
-        docService.create(docConvertor.convertTemplateToDocument(template));
+        docService.create(docConverter.convertTemplateToDocument(template));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -134,7 +134,7 @@ public class DocumentController {
             throw new DocNotCreatedException(str);
         }
 
-        docService.update(docConvertor.convertToEntity(dto));
+        docService.update(docConverter.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

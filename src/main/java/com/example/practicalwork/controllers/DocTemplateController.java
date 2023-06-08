@@ -24,7 +24,7 @@ import java.util.List;
 @Tag(name = "DocTemplateController", description = "API for templates")
 public class DocTemplateController {
     private final DocTemplateService docTemplateService;
-    private final DocTemplateConverter docTemplateConvertor;
+    private final DocTemplateConverter docTemplateConverter;
     private final BindingResultHandler bindingResultHandler;
 
     @GetMapping("/all")
@@ -32,7 +32,7 @@ public class DocTemplateController {
     public List<DocTemplateDTO> getAll() {
 
         List<DocTemplateDTO> dto = docTemplateService.findAll()
-                .stream().map(docTemplateConvertor::convertToDto)
+                .stream().map(docTemplateConverter::convertToDto)
                 .toList();
         if (dto.isEmpty()) {
             throw new DocTemplateListIsEmptyException();
@@ -44,7 +44,7 @@ public class DocTemplateController {
     @Operation(summary = "Get templates", description = "Get current templates only (removed = false)")
     public List<DocTemplateDTO> getCurrent() {
         List<DocTemplateDTO> dto = docTemplateService.findCurrent()
-                .stream().map(docTemplateConvertor::convertToDto)
+                .stream().map(docTemplateConverter::convertToDto)
                 .toList();
         if (dto.isEmpty()) {
             throw new DocTemplateListIsEmptyException();
@@ -68,7 +68,7 @@ public class DocTemplateController {
             throw new DocTemplateListIsEmptyException();
         }
 
-        return list.stream().map(docTemplateConvertor::convertToDto).toList();
+        return list.stream().map(docTemplateConverter::convertToDto).toList();
     }
 
     @GetMapping("/{id}")
@@ -76,7 +76,7 @@ public class DocTemplateController {
     public DocTemplateDTO getById(@PathVariable("id") Long id) {
 
         // Exception set in DocTemplateService
-        return docTemplateConvertor.convertToDto(docTemplateService.read(id));
+        return docTemplateConverter.convertToDto(docTemplateService.read(id));
     }
 
     @DeleteMapping("/{id}")
@@ -109,7 +109,7 @@ public class DocTemplateController {
             throw new DocTemplateNotCreatedException(str);
         }
 
-        docTemplateService.create(docTemplateConvertor.convertToEntity(dto));
+        docTemplateService.create(docTemplateConverter.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }
@@ -126,7 +126,7 @@ public class DocTemplateController {
             throw new DocTemplateNotCreatedException(str);
         }
 
-        docTemplateService.update(docTemplateConvertor.convertToEntity(dto));
+        docTemplateService.update(docTemplateConverter.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
 
     }

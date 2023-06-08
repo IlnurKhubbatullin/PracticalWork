@@ -29,7 +29,7 @@ public class DocFileDTO {
     @Schema (description = "Description of file")
     @NotBlank
     private String description;
-    @Schema (description = "Id of document")
-    private Document document;
+//    @Schema (description = "Id of document")
+//    private Document document;
 
 }

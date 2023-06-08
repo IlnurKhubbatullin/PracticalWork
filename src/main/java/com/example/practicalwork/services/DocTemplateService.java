@@ -17,7 +17,6 @@ import java.util.Optional;
 public class DocTemplateService {
 
     private final DocTemplateRepository docTemplateRepository;
-//    private final DocTemplateDTO docTemplateDTO;
 
     public List<DocTemplate> findAll() {
 
@@ -62,7 +61,7 @@ public class DocTemplateService {
     @Transactional
     public void update(DocTemplate entity) {
 
-        // Change to ModelMapper
+        // To do Change to ModelMapper
 
         DocTemplate myDocTemplate = read(entity.getId());
         myDocTemplate.setTitle(entity.getTitle());
