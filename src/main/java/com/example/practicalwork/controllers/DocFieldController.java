@@ -99,33 +99,33 @@ public class DocFieldController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocFieldErrorResponse> handlerException(DocFieldListIsEmptyException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocFieldListIsEmptyException e) {
         e.printStackTrace();
-        DocFieldErrorResponse response = new DocFieldErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("No fields for this request");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocFieldErrorResponse> handlerException(DocFieldNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocFieldNotFoundException e) {
         e.printStackTrace();
-        DocFieldErrorResponse response = new DocFieldErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Field not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocFieldErrorResponse> handlerException(DocFieldNotDeletedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocFieldNotDeletedException e) {
         e.printStackTrace();
-        DocFieldErrorResponse response = new DocFieldErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Field doesn't need in recovery");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocFieldErrorResponse> handlerException(DocFieldNotCreatedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocFieldNotCreatedException e) {
         e.printStackTrace();
-        DocFieldErrorResponse response = new DocFieldErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

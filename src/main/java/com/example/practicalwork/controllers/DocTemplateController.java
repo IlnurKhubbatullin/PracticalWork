@@ -139,41 +139,41 @@ public class DocTemplateController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateListIsEmptyException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateListIsEmptyException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("No templates for this request");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateNotFoundException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Template not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateNotDeletedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateNotDeletedException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Template doesn't need in recovery");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateNotCreatedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateNotCreatedException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateUnknownTypeOfDocException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateUnknownTypeOfDocException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Incorrect type of template");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

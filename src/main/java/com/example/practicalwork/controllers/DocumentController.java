@@ -172,57 +172,57 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocListIsEmptyException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocListIsEmptyException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("No documents for this request");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocNotFoundException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Document not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentNotDeletedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocumentNotDeletedException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Document doesn't need in recovery");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocTemplateErrorResponse> handlerException(DocTemplateNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocTemplateNotFoundException e) {
         e.printStackTrace();
-        DocTemplateErrorResponse response = new DocTemplateErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Template not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentUnknownTypeOfDocException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocumentUnknownTypeOfDocException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Incorrect type of document");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentNotCreatedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocumentNotCreatedException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DocumentErrorResponse> handlerException(DocumentInvalidFormatOfFileException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocumentInvalidFormatOfFileException e) {
         e.printStackTrace();
-        DocumentErrorResponse response = new DocumentErrorResponse();
+        ErrorResponse response = new ErrorResponse();
         response.setMessage("Invalid format of file. Allowed: /docx, /xlsx, /pdf");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

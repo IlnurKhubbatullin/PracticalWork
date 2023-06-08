@@ -4,15 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Setter
 @Getter
-public class DocFieldErrorResponse {
+public class ErrorResponse {
         private String message;
         private LocalDateTime timestamp;
 
-        public DocFieldErrorResponse() {
+        public ErrorResponse() {
+
                 timestamp = LocalDateTime.now();
         }
 

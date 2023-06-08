@@ -1,17 +1,12 @@
 package com.example.practicalwork.services;
 
-import com.example.practicalwork.DTO.DocFieldDTO;
 import com.example.practicalwork.models.DocField;
 import com.example.practicalwork.repositories.DocFieldRepository;
-import com.example.practicalwork.utils.DocFieldErrorResponse;
 import com.example.practicalwork.utils.DocFieldNotDeletedException;
 import com.example.practicalwork.utils.DocFieldNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Optional;
