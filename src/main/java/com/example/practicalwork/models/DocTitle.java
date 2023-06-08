@@ -1,7 +1,5 @@
 package com.example.practicalwork.models;
 
-import com.example.practicalwork.utils.DocTemplateNotCreatedException;
-import com.example.practicalwork.utils.DocTemplateUnknownTypeOfDocException;
 import lombok.Getter;
 
 import java.io.Serializable;

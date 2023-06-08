@@ -2,8 +2,8 @@ package com.example.practicalwork.services;
 
 import com.example.practicalwork.models.DocField;
 import com.example.practicalwork.repositories.DocFieldRepository;
-import com.example.practicalwork.utils.DocFieldNotDeletedException;
-import com.example.practicalwork.utils.DocFieldNotFoundException;
+import com.example.practicalwork.utils.field.DocFieldNotDeletedException;
+import com.example.practicalwork.utils.field.DocFieldNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

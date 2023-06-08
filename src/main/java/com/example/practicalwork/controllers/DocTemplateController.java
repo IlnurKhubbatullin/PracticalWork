@@ -6,6 +6,7 @@ import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.utils.*;
+import com.example.practicalwork.utils.template.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

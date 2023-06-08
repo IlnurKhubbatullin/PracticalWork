@@ -5,10 +5,12 @@ import com.example.practicalwork.converters.*;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
 import com.example.practicalwork.models.Document;
-import com.example.practicalwork.models.Mimetype;
+import com.example.practicalwork.models.Extension;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.*;
+import com.example.practicalwork.utils.document.*;
+import com.example.practicalwork.utils.template.DocTemplateNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -129,7 +131,7 @@ public class DocumentController {
 
         if (bindingResult.hasErrors()) {
             String str = bindingResultHandler.createErrorMessage(bindingResult);
-            throw new DocumentNotCreatedException(str);
+            throw new DocNotCreatedException(str);
         }
 
         docService.update(docConvertor.convertToEntity(dto));
@@ -139,23 +141,25 @@ public class DocumentController {
     void throwExceptionIfTypeIncorrect(DocumentDTO dto) {
         String type = DocTitle.findByValue(dto.getDocTitle());
         if (type == null) {
-            throw new DocumentUnknownTypeOfDocException();
+            throw new DocUnknownTypeOfDocException();
         } dto.setDocTitle(type.toUpperCase());
     }
 
     @GetMapping("/{id}/{format}")
     @Operation(summary = "Create file", description = "Create file using document id. Formats: docx, xlsx, pdf. To create an archive use ?zip=true, default value false")
-    public ResponseEntity<HttpStatus> createFileFromDoc(@PathVariable("id") Long id,
+    public ResponseEntity<FileUriResponse> createFileFromDoc(@PathVariable("id") Long id,
                                                         @PathVariable("format") String f,
                                                         @RequestParam(value = "zip", required = false,
                                                                 defaultValue = "false") boolean isZip)
                                                         throws IOException {
         Document doc = docService.read(id);
 
-        Mimetype format = Mimetype.findByValue(f);
+        Extension format = Extension.findByValue(f);
         if (format == null) {
-            throw new DocumentInvalidFormatOfFileException();
+            throw new DocInvalidFormatOfFileException();
         }
+
+        // To do create DocFile
 
         switch (format) {
             case DOCX -> toDocxConverter.convert(doc);
@@ -167,7 +171,9 @@ public class DocumentController {
             toZipConverter.convert(doc);
         }
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        FileUriResponse fileUriResponse = new FileUriResponse();
+
+        return new ResponseEntity<>(fileUriResponse, HttpStatus.OK);
 
     }
 
@@ -188,7 +194,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocumentNotDeletedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocNotDeletedException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Document doesn't need in recovery");
@@ -204,7 +210,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocumentUnknownTypeOfDocException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocUnknownTypeOfDocException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Incorrect type of document");
@@ -212,7 +218,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocumentNotCreatedException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocNotCreatedException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
@@ -220,7 +226,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocumentInvalidFormatOfFileException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocInvalidFormatOfFileException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Invalid format of file. Allowed: /docx, /xlsx, /pdf");

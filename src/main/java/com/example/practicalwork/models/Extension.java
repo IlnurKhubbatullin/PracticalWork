@@ -1,13 +1,11 @@
 package com.example.practicalwork.models;
 
-import com.example.practicalwork.utils.DocumentInvalidFormatOfFileException;
-
-public enum Mimetype {
+public enum Extension {
     DOCX,
     XLSX,
     PDF;
-    public static Mimetype findByValue(String value) {
-        for (Mimetype m : Mimetype.values()) {
+    public static Extension findByValue(String value) {
+        for (Extension m : Extension.values()) {
             if (m.name().equalsIgnoreCase(value)) {
                 return m;
             }

@@ -24,7 +24,8 @@ public class DocFile implements Serializable {
     private LocalDateTime updatedAt;
     private boolean removed;
     private String name;
-    private Mimetype mimetype;
+    private Extension extension;
+    private boolean isZip;
     private String store;
     private Long size;
     private String description;

@@ -1,4 +1,4 @@
-package com.example.practicalwork.utils;
+package com.example.practicalwork.utils.file;
 
 public class DocFileListIsEmptyException extends RuntimeException {
 

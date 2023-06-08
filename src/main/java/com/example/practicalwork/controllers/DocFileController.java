@@ -3,8 +3,11 @@ package com.example.practicalwork.controllers;
 import com.example.practicalwork.DTO.DocFileDTO;
 import com.example.practicalwork.converters.DocFileConverter;
 import com.example.practicalwork.services.DocFileService;
-import com.example.practicalwork.utils.DocFileListIsEmptyException;
+import com.example.practicalwork.utils.file.DocFileListIsEmptyException;
+import com.example.practicalwork.utils.file.DocFileNotDeletedException;
+import com.example.practicalwork.utils.file.DocFileNotFoundException;
 import com.example.practicalwork.utils.ErrorResponse;
+import com.example.practicalwork.utils.template.DocTemplateNotDeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -39,12 +42,29 @@ public class DocFileController {
     }
 
 
+
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(DocFileListIsEmptyException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage("No files for this request");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocFileNotFoundException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("File not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocFileNotDeletedException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("File doesn't need in recovery");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
 }

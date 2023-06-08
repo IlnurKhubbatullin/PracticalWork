@@ -1,10 +1,8 @@
 package com.example.practicalwork.DTO;
 
 import com.example.practicalwork.models.Document;
-import com.example.practicalwork.models.Mimetype;
+import com.example.practicalwork.models.Extension;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -21,9 +19,11 @@ public class DocFileDTO {
     private String name;
     @Schema (description = "Format of file")
     @NotBlank
-    private Mimetype mimetype;
-    @Schema (description = "Store of file")
-    private String store;
+    private String extension;
+    @Schema (description = "Zip archive")
+    private boolean isZip;
+//    @Schema (description = "Store of file")
+//    private String store;
     @Schema (description = "Size of file in Bytes")
     private Long size;
     @Schema (description = "Description of file")
