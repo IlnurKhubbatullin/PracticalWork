@@ -2,6 +2,7 @@ package com.example.practicalwork.services;
 
 import com.example.practicalwork.models.Document;
 import com.example.practicalwork.repositories.DocRepository;
+import com.example.practicalwork.utils.document.DocIsDeletedException;
 import com.example.practicalwork.utils.document.DocNotFoundException;
 import com.example.practicalwork.utils.document.DocNotDeletedException;
 import lombok.AllArgsConstructor;
@@ -43,8 +44,12 @@ public class DocumentService {
     @Transactional
     public void delete(Long id) {
         Document doc = read(id);
-        doc.setRemoved(true);
-        docRepository.save(doc);
+        if (doc.isRemoved()) {
+            throw new DocIsDeletedException();
+        } else {
+            doc.setRemoved(true);
+            docRepository.save(doc);
+        }
     }
 
     @Transactional

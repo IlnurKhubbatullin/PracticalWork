@@ -169,37 +169,34 @@ public class DocumentController {
         } dto.setDocTitle(type.toUpperCase());
     }
 
-    @GetMapping("/{id}/{format}")
-    @Operation(summary = "Create file", description = "Create file using document id. Formats: docx, xlsx, pdf. To create an archive use ?zip=true, default value false")
-    public ResponseEntity<FileUriResponse> createFileFromDoc(@PathVariable("id") Long id,
-                                                        @PathVariable("format") String f,
-                                                        @RequestParam(value = "zip", required = false,
-                                                                defaultValue = "false") boolean isZip)
-                                                        throws IOException {
-        Document doc = docService.read(id);
-
-        Extension format = Extension.findByValue(f);
-        if (format == null) {
-            throw new DocInvalidFormatOfFileException();
-        }
-
-        // To do create DocFile
-
-        switch (format) {
-            case DOCX -> toDocxConverter.convert(doc);
-            case XLSX -> toXlsxConverter.convert(doc);
-            case PDF -> toPdfConverter.convert(doc);
-        }
-
-        if (isZip) {
-            toZipConverter.convert(doc);
-        }
-
-        FileUriResponse fileUriResponse = new FileUriResponse();
-
-        return new ResponseEntity<>(fileUriResponse, HttpStatus.OK);
-
-    }
+//    @GetMapping("/file")
+//    @Operation(summary = "Create file", description = "Create file using document id. Formats: docx, xlsx, pdf. To create an archive use ?zip=true, default value false")
+//    public ResponseEntity<FileUriResponse> createFileFromDoc(@RequestBody @Valid DocumentDTO dto,
+//                                                             BindingResult bindingResult) {
+//        Document doc = docService.read(id);
+//
+//        Extension format = Extension.findByValue(f);
+//        if (format == null) {
+//            throw new DocInvalidFormatOfFileException();
+//        }
+//
+//        // To do create DocFile
+//
+//        switch (format) {
+//            case DOCX -> toDocxConverter.convert(doc);
+//            case XLSX -> toXlsxConverter.convert(doc);
+//            case PDF -> toPdfConverter.convert(doc);
+//        }
+//
+//        if (isZip) {
+//            toZipConverter.convert(doc);
+//        }
+//
+//        FileUriResponse fileUriResponse = new FileUriResponse();
+//
+//        return new ResponseEntity<>(fileUriResponse, HttpStatus.OK);
+//
+//    }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(DocListIsEmptyException e) {
@@ -225,6 +222,15 @@ public class DocumentController {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocIsDeletedException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("Document is deleted");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    // Duplicated from DocTemplateController
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(DocTemplateNotFoundException e) {
         e.printStackTrace();

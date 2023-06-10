@@ -2,8 +2,12 @@ package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.DocFileDTO;
 import com.example.practicalwork.converters.DocFileConverter;
+import com.example.practicalwork.models.Document;
 import com.example.practicalwork.services.DocFileService;
+import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.BindingResultHandler;
+import com.example.practicalwork.utils.document.DocIsDeletedException;
+import com.example.practicalwork.utils.document.DocNotFoundException;
 import com.example.practicalwork.utils.file.DocFileListIsEmptyException;
 import com.example.practicalwork.utils.file.DocFileNotCreatedException;
 import com.example.practicalwork.utils.file.DocFileNotDeletedException;
@@ -29,6 +33,7 @@ public class DocFileController {
     private final DocFileService docFileService;
     private final DocFileConverter docFileConverter;
     private final BindingResultHandler bindingResultHandler;
+    private final DocumentService documentService;
 
     @GetMapping("/all")
     @Operation(summary = "Get files", description = "Get all current and removed files")
@@ -80,17 +85,44 @@ public class DocFileController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/new")
+
+    /*****
+     * POST localhost:8080/api/file/doc/{id}
+     * RequestBody requires JSON
+     *  {
+     *    "name": "name_of_file",
+     *    "extension": "pdf",
+     *    "zip": true,
+     *    "description": "Description of file"
+     *  }
+     * Response OK = 200
+     * Response BAD_REQUEST = 404
+     *  {
+     *    "message": "name : ..., extension : ..., zip : ..., description : ...",
+     *    "timestamp": "2023-04-06T13:25:30.788+00:00"
+     *  }
+     * */
+    @PostMapping("/doc/{id}")
     @Operation(summary = "Create file", description = "Create new file using data in json")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid DocFileDTO dto,
+    public ResponseEntity<HttpStatus> create(@PathVariable("id") Long docId,
+                                             @RequestBody @Valid DocFileDTO dto,
                                              BindingResult bindingResult) {
+
+        Document doc = documentService.read(docId);
+
+        if (doc.isRemoved()) {
+            throw new DocIsDeletedException();
+        }
+
         if (bindingResult.hasErrors()) {
             String str = bindingResultHandler.createErrorMessage(bindingResult);
             throw new DocFileNotCreatedException(str);
         }
+
         docFileService.create(docFileConverter.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
 
     @PutMapping("/update")
     @Operation(summary = "Update file", description = "Update current file by id in json")
@@ -134,6 +166,24 @@ public class DocFileController {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    // Duplicated from DocumentController
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocNotFoundException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("Document not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    // Duplicated from DocumentController
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocIsDeletedException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("Document is deleted");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
 }
