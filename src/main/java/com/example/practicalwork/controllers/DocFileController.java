@@ -3,15 +3,13 @@ package com.example.practicalwork.controllers;
 import com.example.practicalwork.DTO.DocFileDTO;
 import com.example.practicalwork.converters.DocFileConverter;
 import com.example.practicalwork.models.Document;
+import com.example.practicalwork.models.Extension;
 import com.example.practicalwork.services.DocFileService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.BindingResultHandler;
 import com.example.practicalwork.utils.document.DocIsDeletedException;
 import com.example.practicalwork.utils.document.DocNotFoundException;
-import com.example.practicalwork.utils.file.DocFileListIsEmptyException;
-import com.example.practicalwork.utils.file.DocFileNotCreatedException;
-import com.example.practicalwork.utils.file.DocFileNotDeletedException;
-import com.example.practicalwork.utils.file.DocFileNotFoundException;
+import com.example.practicalwork.utils.file.*;
 import com.example.practicalwork.utils.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -119,6 +117,11 @@ public class DocFileController {
             throw new DocFileNotCreatedException(str);
         }
 
+        Extension format = Extension.findByValue(dto.getExtension());
+        if (format == null) {
+            throw new DocFileInvalidFormatOfFileException();
+        }
+
         docFileService.create(docFileConverter.convertToEntity(dto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -184,6 +187,14 @@ public class DocFileController {
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Document is deleted");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(DocFileInvalidFormatOfFileException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("Invalid format of file. Allowed: docx, xlsx, pdf");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -4,8 +4,6 @@ import com.example.practicalwork.DTO.DocumentDTO;
 import com.example.practicalwork.converters.*;
 import com.example.practicalwork.models.DocTemplate;
 import com.example.practicalwork.models.DocTitle;
-import com.example.practicalwork.models.Document;
-import com.example.practicalwork.models.Extension;
 import com.example.practicalwork.services.DocTemplateService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.*;
@@ -20,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -136,7 +133,7 @@ public class DocumentController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/new/from-template/{id}")
+    @PostMapping("/new/template/{id}")
     @Operation(summary = "Create document", description = "Create new document from template by id")
     public ResponseEntity<HttpStatus> createFromTemplate(@PathVariable("id") Long idTemplate) {
 
@@ -165,7 +162,7 @@ public class DocumentController {
     void throwExceptionIfTypeIncorrect(DocumentDTO dto) {
         String type = DocTitle.findByValue(dto.getDocTitle());
         if (type == null) {
-            throw new DocUnknownTypeOfDocException();
+            throw new DocInvalidTypeOfDocException();
         } dto.setDocTitle(type.toUpperCase());
     }
 
@@ -240,7 +237,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocUnknownTypeOfDocException e) {
+    public ResponseEntity<ErrorResponse> handlerException(DocInvalidTypeOfDocException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Incorrect type of document");
@@ -255,13 +252,13 @@ public class DocumentController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocInvalidFormatOfFileException e) {
-        e.printStackTrace();
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage("Invalid format of file. Allowed: /docx, /xlsx, /pdf");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handlerException(DocInvalidFormatOfFileException e) {
+//        e.printStackTrace();
+//        ErrorResponse response = new ErrorResponse();
+//        response.setMessage("Invalid format of file. Allowed: /docx, /xlsx, /pdf");
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//    }
 
     // @ExceptionHandler
     // ...
