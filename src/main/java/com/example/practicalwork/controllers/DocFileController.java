@@ -1,12 +1,15 @@
 package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.DocFileDTO;
-import com.example.practicalwork.converters.DocFileConverter;
+import com.example.practicalwork.converters.*;
+import com.example.practicalwork.models.DocFile;
 import com.example.practicalwork.models.Document;
-import com.example.practicalwork.models.Extension;
+import com.example.practicalwork.repositories.DocFileRepository;
+import com.example.practicalwork.repositories.DocRepository;
 import com.example.practicalwork.services.DocFileService;
 import com.example.practicalwork.services.DocumentService;
 import com.example.practicalwork.utils.BindingResultHandler;
+import com.example.practicalwork.utils.FileUriResponse;
 import com.example.practicalwork.utils.document.DocIsDeletedException;
 import com.example.practicalwork.utils.document.DocNotFoundException;
 import com.example.practicalwork.utils.file.*;
@@ -17,9 +20,10 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,6 +36,11 @@ public class DocFileController {
     private final DocFileConverter docFileConverter;
     private final BindingResultHandler bindingResultHandler;
     private final DocumentService documentService;
+    private final ToDocxConverter toDocxConverter;
+    private final ToXlsxConverter toXlsxConverter;
+    private final ToPdfConverter toPdfConverter;
+    private final DocFileRepository docFileRepository;
+    private final DocRepository docRepository;
 
     @GetMapping("/all")
     @Operation(summary = "Get files", description = "Get all current and removed files")
@@ -88,23 +97,22 @@ public class DocFileController {
      * POST localhost:8080/api/file/doc/{id}
      * RequestBody requires JSON
      *  {
-     *    "name": "name_of_file",
-     *    "extension": "pdf",
+     *    "extension": "PDF", // DOCX, XLSX, PDF
      *    "zip": true,
      *    "description": "Description of file"
      *  }
      * Response OK = 200
      * Response BAD_REQUEST = 404
      *  {
-     *    "message": "name : ..., extension : ..., zip : ..., description : ...",
+     *    "message": "zip : ..., description : ...",
      *    "timestamp": "2023-04-06T13:25:30.788+00:00"
      *  }
      * */
     @PostMapping("/doc/{id}")
     @Operation(summary = "Create file", description = "Create new file using data in json")
-    public ResponseEntity<HttpStatus> create(@PathVariable("id") Long docId,
-                                             @RequestBody @Valid DocFileDTO dto,
-                                             BindingResult bindingResult) {
+    public ResponseEntity<FileUriResponse> create(@PathVariable("id") Long docId,
+                                             @RequestBody @Valid DocFileDTO fileDto,
+                                             BindingResult bindingResult) throws IOException {
 
         Document doc = documentService.read(docId);
 
@@ -117,15 +125,33 @@ public class DocFileController {
             throw new DocFileNotCreatedException(str);
         }
 
-        Extension format = Extension.findByValue(dto.getExtension());
-        if (format == null) {
-            throw new DocFileInvalidFormatOfFileException();
+//        Extension format = Extension.findByValue(dto.getExtension());
+//        if (format == null) {
+//            throw new DocFileInvalidFormatOfFileException();
+//        }
+
+        DocFile file = docFileConverter.convertToEntity(fileDto);
+        docFileService.create(file);
+        doc.setFile(file);
+        documentService.update(doc);
+        docFileService.update(file);
+
+        // Create files
+        String storeOut = "";
+//        doc.getFile().setStore(storeOut);
+//        docFileRepository.save(doc.getFile());
+
+        switch (doc.getFile().getExtension()) {
+            case DOCX -> toDocxConverter.convert(doc);
+            case XLSX -> toXlsxConverter.convert(doc);
+            case PDF -> toPdfConverter.convert(doc);
         }
 
-        docFileService.create(docFileConverter.convertToEntity(dto));
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
+        String uri = storeOut + doc.getFile().getName();
 
+        FileUriResponse fileUriResponse = new FileUriResponse(uri);
+        return new ResponseEntity<>(fileUriResponse, HttpStatus.OK);
+    }
 
     @PutMapping("/update")
     @Operation(summary = "Update file", description = "Update current file by id in json")
@@ -189,11 +215,20 @@ public class DocFileController {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+//  //Use handler for String extension in DocFileDTO
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handlerException(DocFileInvalidExtensionOfFileException e) {
+//        e.printStackTrace();
+//        ErrorResponse response = new ErrorResponse();
+//        response.setMessage("Invalid file extension. Allowed: docx, xlsx, pdf");
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//    }
+
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(DocFileInvalidFormatOfFileException e) {
+    public ResponseEntity<ErrorResponse> handlerException(HttpMessageNotReadableException e) {
         e.printStackTrace();
         ErrorResponse response = new ErrorResponse();
-        response.setMessage("Invalid format of file. Allowed: docx, xlsx, pdf");
+        response.setMessage("Invalid file extension. Allowed: DOCX, XLSX, PDF");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

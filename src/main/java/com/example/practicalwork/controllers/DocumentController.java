@@ -29,10 +29,6 @@ public class DocumentController {
     private final DocTemplateService templateService;
     private final DocumentConverter docConverter;
     private final BindingResultHandler bindingResultHandler;
-    private final ToDocxConverter toDocxConverter;
-    private final ToXlsxConverter toXlsxConverter;
-    private final ToPdfConverter toPdfConverter;
-    private final ToZipConverter toZipConverter;
 
     @GetMapping("/all")
     @Operation(summary = "Get documents", description = "Get all current and removed documents")
@@ -165,35 +161,6 @@ public class DocumentController {
             throw new DocInvalidTypeOfDocException();
         } dto.setDocTitle(type.toUpperCase());
     }
-
-//    @GetMapping("/file")
-//    @Operation(summary = "Create file", description = "Create file using document id. Formats: docx, xlsx, pdf. To create an archive use ?zip=true, default value false")
-//    public ResponseEntity<FileUriResponse> createFileFromDoc(@RequestBody @Valid DocumentDTO dto,
-//                                                             BindingResult bindingResult) {
-//        Document doc = docService.read(id);
-//
-//        Extension format = Extension.findByValue(f);
-//        if (format == null) {
-//            throw new DocInvalidFormatOfFileException();
-//        }
-//
-//        // To do create DocFile
-//
-//        switch (format) {
-//            case DOCX -> toDocxConverter.convert(doc);
-//            case XLSX -> toXlsxConverter.convert(doc);
-//            case PDF -> toPdfConverter.convert(doc);
-//        }
-//
-//        if (isZip) {
-//            toZipConverter.convert(doc);
-//        }
-//
-//        FileUriResponse fileUriResponse = new FileUriResponse();
-//
-//        return new ResponseEntity<>(fileUriResponse, HttpStatus.OK);
-//
-//    }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(DocListIsEmptyException e) {

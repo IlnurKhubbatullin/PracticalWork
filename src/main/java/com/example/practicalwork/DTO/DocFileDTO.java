@@ -16,11 +16,9 @@ public class DocFileDTO {
     @Schema (description = "Id of the file")
     private Long id;
     @Schema (description = "Name of the file")
-    @NotBlank
     private String name;
     @Schema (description = "Format of the file")
-    @NotBlank
-    private String extension;
+    private Extension extension;
     @Schema (description = "Zip archive")
     @JsonProperty("zip")
     private boolean isZip;

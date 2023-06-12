@@ -29,7 +29,7 @@ public class DocFile implements Serializable {
     private String store;
     private Long size;
     private String description;
-    @OneToOne (cascade = CascadeType.MERGE)
+    @OneToOne
     private Document document;
 
 }

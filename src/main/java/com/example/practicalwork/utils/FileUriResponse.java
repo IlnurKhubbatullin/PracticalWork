@@ -12,8 +12,8 @@ public class FileUriResponse {
     private String uri;
     private LocalDateTime timestamp;
 
-    public FileUriResponse() {
-
+    public FileUriResponse(String uri) {
+        this.uri = uri;
         timestamp = LocalDateTime.now();
     }
 }

@@ -32,7 +32,8 @@ public class Document implements Serializable {
     private List<DocRelated> docRelatedList;
     @OneToOne (cascade = CascadeType.MERGE)
     private DocTemplate template;
-    @OneToOne (cascade = CascadeType.MERGE)
+    @OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL,
+            mappedBy = "document")
     private DocFile file;
     @OneToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn (name = "document_id")
