@@ -39,8 +39,6 @@ public class DocFileController {
     private final ToDocxConverter toDocxConverter;
     private final ToXlsxConverter toXlsxConverter;
     private final ToPdfConverter toPdfConverter;
-    private final DocFileRepository docFileRepository;
-    private final DocRepository docRepository;
 
     @GetMapping("/all")
     @Operation(summary = "Get files", description = "Get all current and removed files")
@@ -132,14 +130,15 @@ public class DocFileController {
 
         DocFile file = docFileConverter.convertToEntity(fileDto);
         docFileService.create(file);
+
         doc.setFile(file);
-        documentService.update(doc);
+        file.setDocument(doc);
         docFileService.update(file);
 
         // Create files
         String storeOut = "";
 //        doc.getFile().setStore(storeOut);
-//        docFileRepository.save(doc.getFile());
+//        docFileService.update(doc.getFile());
 
         switch (doc.getFile().getExtension()) {
             case DOCX -> toDocxConverter.convert(doc);
