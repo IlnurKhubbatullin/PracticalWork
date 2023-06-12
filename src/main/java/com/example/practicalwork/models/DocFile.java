@@ -29,7 +29,16 @@ public class DocFile implements Serializable {
     private String store;
     private Long size;
     private String description;
-    @OneToOne
+
+//    @OneToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "document_id", nullable = false)
+//    private Document document;
+
+    @OneToOne (fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "file")
     private Document document;
+
+
 
 }

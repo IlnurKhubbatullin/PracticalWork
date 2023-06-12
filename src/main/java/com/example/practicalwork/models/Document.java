@@ -30,11 +30,23 @@ public class Document implements Serializable {
     @OneToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn (name = "document_id")
     private List<DocRelated> docRelatedList;
-    @OneToOne (cascade = CascadeType.MERGE)
-    private DocTemplate template;
-    @OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL,
-            mappedBy = "document")
+
+//    @OneToOne (fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL,
+//            mappedBy = "document")
+//    private DocTemplate template;
+//    @OneToOne (fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL,
+//            mappedBy = "document")
+//    private DocFile file;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "file_id")
     private DocFile file;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "template_id")
+    private DocTemplate template;
+
     @OneToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn (name = "document_id")
     private List<DocField> fields;

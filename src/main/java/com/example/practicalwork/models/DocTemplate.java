@@ -27,6 +27,16 @@ public class DocTemplate implements Serializable {
     private String title;
     private String version;
     private DocTitle docTitle;
+
+//    @OneToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "document_id", nullable = false)
+//    private Document document;
+
+    @OneToOne (fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "template")
+    private Document document;
+
     @OneToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn (name = "template_id")
     private List<DocField> fields;
