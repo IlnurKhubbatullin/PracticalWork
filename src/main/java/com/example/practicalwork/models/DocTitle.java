@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 @Getter
 public enum DocTitle implements Serializable {
-    CONTRACT("Contract"),
-    AGREEMENT("Agreement"),
-    APPLICATION("Application"),
-    ACT("Act"),
-    REFERENCE("Reference");
+    CONTRACT("Договор"),
+    AGREEMENT("Соглашение"),
+    APPLICATION("Приложение"),
+    ACT("Акт"),
+    REFERENCE("Счет");
 
     private final String label;
 

@@ -90,7 +90,6 @@ public class DocFileController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
     /*****
      * POST localhost:8080/api/file/doc/{id}
      * RequestBody requires JSON
@@ -101,6 +100,14 @@ public class DocFileController {
      *  }
      * Response OK = 200
      * Response BAD_REQUEST = 404
+     *  {
+     *    "message": "Invalid file extension. Allowed: DOCX, XLSX, PDF",
+     *    "timestamp": "2023-04-06T13:25:30.788+00:00"
+     *  }
+     *  {
+     *    "message": "Document not found",
+     *    "timestamp": "2023-04-06T13:25:30.788+00:00"
+     *  }
      *  {
      *    "message": "zip : ..., description : ...",
      *    "timestamp": "2023-04-06T13:25:30.788+00:00"
