@@ -10,7 +10,8 @@ public enum DocTitle implements Serializable {
     AGREEMENT("Соглашение"),
     APPLICATION("Приложение"),
     ACT("Акт"),
-    REFERENCE("Счет");
+    ACCOUNT("Счет"),
+    REFERENCE("Справка");
 
     private final String label;
 
