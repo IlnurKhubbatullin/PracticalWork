@@ -9,9 +9,9 @@ public class FileNameCreator {
     public String create(Document doc) {
 
         return doc.getDocTitle().getLabel() +
-                "_" +
+                "-" +
                 doc.getNumber() +
-                "_" +
+                "-" +
                 LocalDateTime.now().toString().substring(0, 10);
     }
 }
