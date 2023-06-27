@@ -2,10 +2,7 @@ package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.ContractorDTO;
 import com.example.practicalwork.models.Contractor;
-import com.example.practicalwork.models.Credential;
-import com.example.practicalwork.models.Document;
 import com.example.practicalwork.services.ContractorService;
-//import io.swagger.models.Response;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
