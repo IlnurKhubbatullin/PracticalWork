@@ -2,11 +2,18 @@ package com.example.practicalwork.controllers;
 
 import com.example.practicalwork.DTO.ContractorDTO;
 import com.example.practicalwork.models.Contractor;
-import com.example.practicalwork.models.Document;
 import com.example.practicalwork.services.ContractorService;
 import com.example.practicalwork.utils.BindingResultHandler;
+import com.example.practicalwork.utils.ErrorResponse;
+import com.example.practicalwork.utils.contractor.ContrIsDeletedException;
 import com.example.practicalwork.utils.contractor.ContrListIsEmptyException;
 import com.example.practicalwork.utils.contractor.ContrNotCreatedException;
+import com.example.practicalwork.utils.contractor.ContrNotDeletedException;
+import com.example.practicalwork.utils.document.DocInvalidTypeOfDocException;
+import com.example.practicalwork.utils.document.DocIsDeletedException;
+import com.example.practicalwork.utils.document.DocNotCreatedException;
+import com.example.practicalwork.utils.document.DocNotDeletedException;
+import com.example.practicalwork.utils.template.DocTemplateNotFoundException;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -151,6 +158,21 @@ public class ContractorController {
     public ResponseEntity<HttpStatus> deleteContractor (@PathVariable("id") Long id) {
         contractorService.deleteContractor(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(ContrIsDeletedException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage("Contractor is deleted");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(ContrNotCreatedException e) {
+        e.printStackTrace();
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }

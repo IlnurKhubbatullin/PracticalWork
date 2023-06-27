@@ -17,7 +17,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public ResponseEntity<HttpStatus> createComment (@RequestBody @Valid Comment comment) {
         commentService.saveCreateComment(comment);
         return ResponseEntity.ok(HttpStatus.OK);
