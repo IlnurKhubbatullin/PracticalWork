@@ -4,8 +4,12 @@ import com.example.practicalwork.models.Comment;
 import com.example.practicalwork.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class CommentService {
 
     private final CommentRepository commentRepository;
@@ -15,31 +19,26 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-//    public Comment findComment (Long id) {
-//        return commentRepository.findContractorById(id);
-//    }
-
-    public Comment saveCreateComment (Comment createComment) {
-        Comment comment = new Comment();
-        if (createComment != null) {
-            comment.setText(createComment.getText());
-            commentRepository.save(comment);
-            return comment;
-        }
-        return null;
+    public Comment findComment (Long id) {
+        Optional<Comment> comOpt = commentRepository.findById(id);
+        return comOpt.orElseThrow();
     }
 
-//    public Comment updateComment (Long id, Comment updateComment) {
-//        Comment comment = findComment(id);
-//        comment.setText(updateComment.getText());
-//        commentRepository.save(comment);
-//        return comment;
-//    }
-//
-//    public Comment deleteComment (Long id) {
-//        Comment comment = findComment(id);
-//        comment.setRemoved(true);
-//        commentRepository.save(comment);
-//        return comment;
-//    }
+    public void saveCreateComment (Comment createComment) {
+            commentRepository.save(createComment);
+    }
+
+    @Transactional
+    public void updateComment (Comment updateComment) {
+        Comment comment = findComment(updateComment.getId());
+        comment.setText(updateComment.getText());
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void deleteComment (Long id) {
+        Comment comment = findComment(id);
+        comment.setRemoved(true);
+        commentRepository.save(comment);
+    }
 }

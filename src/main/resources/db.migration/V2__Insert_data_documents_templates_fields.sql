@@ -74,6 +74,8 @@ values (now(), 'ИП Фамилия И.О.
 'Footer of contract', 'Executor sign',
 false, 'Contract field', now(), 1, 1);
 
+insert into schema_system.contractor  (id, country, email, first_name, removed)
+values (2, 'Russia', 'email@', 'Name', false);
 
 
 
