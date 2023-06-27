@@ -30,7 +30,6 @@ public class ContractorController {
         this.modelMapper = modelMapper;
     }
 
-
 //    @GetMapping()
 //    public List<ContractorDTO> getContractors () {
 //        return contractorService.allContractors().stream()
